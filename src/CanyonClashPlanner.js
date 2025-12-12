@@ -10,12 +10,12 @@ const TEAMS = {
 
 const BATTLE_PHASES = [
   { name: 'Prep Phase', time: 0, description: 'Starters enter battlefield' },
-  { name: 'Phase I Start', time: 1, description: 'Hospital & Water Refinery accessible' },
-  { name: 'Free Teleport 1', time: 3, description: 'First free teleport available' },
-  { name: 'Free Teleport 2', time: 6, description: 'Second free teleport available' },
-  { name: 'Energy Core', time: 10, description: 'Energy Core appears (estimate)' },
-  { name: 'Free Teleport 3', time: 9, description: 'Third free teleport available' },
-  { name: 'Battle End', time: 20, description: 'Battle concludes' }
+  { name: 'Phase I Start', time: 2, description: 'Hospital & Water Refinery accessible' },
+  { name: 'Free Teleport 1', time: 6, description: 'First free teleport available' },
+  { name: 'Free Teleport 2', time: 12, description: 'Second free teleport available' },
+  { name: 'Energy Core', time: 20, description: 'Energy Core appears' },
+  { name: 'Free Teleport 3', time: 18, description: 'Third free teleport available' },
+  { name: 'Battle End', time: 40, description: 'Battle concludes' }
 ];
 
 function CanyonClashPlanner() {
@@ -23,12 +23,12 @@ function CanyonClashPlanner() {
   const [selectedTeam, setSelectedTeam] = useState('A');
   const [markings, setMarkings] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
-  const maxTime = 20;
+  const maxTime = 40;
   const [teamTimings, setTeamTimings] = useState({
     A: 0,
     B: 0,
-    C: 2,
-    D: 2
+    C: 4,
+    D: 4
   });
 
   const handleMapClick = (e) => {
