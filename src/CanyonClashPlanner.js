@@ -72,8 +72,8 @@ function CanyonClashPlanner() {
     canvas.height = container.offsetHeight;
     const ctx = canvas.getContext('2d');
 
-    // Fill background with color first
-    ctx.fillStyle = '#D4A574';
+    // Fill background with light gray
+    ctx.fillStyle = '#F5F5F5';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Try to draw the SVG background
@@ -85,29 +85,60 @@ function CanyonClashPlanner() {
       drawMarkingsAndExport(ctx, canvas);
     };
     bgImage.onerror = () => {
-      // If SVG fails to load, just use the color background
+      // If SVG fails to load, just use the light gray background
       drawMarkingsAndExport(ctx, canvas);
     };
   };
 
   const drawMarkingsAndExport = (ctx, canvas) => {
-    // Draw markings
+    // Draw markings with enhanced styling
     markings.forEach((marking) => {
       const teamColor = TEAMS[marking.team].color;
+      
+      // Draw shadow effect
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+      ctx.fillRect(marking.x - 14, marking.y - 14, 28, 28);
+      
+      // Draw marker background
       ctx.fillStyle = teamColor;
-      ctx.globalAlpha = 0.6;
+      ctx.globalAlpha = 0.75;
       ctx.fillRect(marking.x - 15, marking.y - 15, 30, 30);
       ctx.globalAlpha = 1;
 
+      // Draw marker border
       ctx.strokeStyle = teamColor;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 2.5;
       ctx.strokeRect(marking.x - 15, marking.y - 15, 30, 30);
 
+      // Draw team label
       ctx.fillStyle = '#fff';
-      ctx.font = 'bold 14px Arial';
+      ctx.font = 'bold 13px Arial';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(marking.team, marking.x, marking.y);
+      ctx.fillText(marking.team, marking.x, marking.y - 2);
+      
+      // Draw time label
+      ctx.font = 'bold 10px Arial';
+      ctx.fillText(marking.time + 'm', marking.x, marking.y + 8);
+    });
+
+    // Add title and legend
+    const padding = 10;
+    ctx.fillStyle = '#333';
+    ctx.font = 'bold 16px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText('Last Z - Canyon Clash Strategy', padding, 25);
+    
+    // Draw legend
+    const legendY = canvas.height - 45;
+    ctx.font = '11px Arial';
+    ctx.textAlign = 'left';
+    Object.entries(TEAMS).forEach(([key, team], idx) => {
+      const x = padding + (idx * 140);
+      ctx.fillStyle = team.color;
+      ctx.fillRect(x, legendY, 12, 12);
+      ctx.fillStyle = '#333';
+      ctx.fillText(key + ' - ' + team.description, x + 16, legendY + 9);
     });
 
     // Download
