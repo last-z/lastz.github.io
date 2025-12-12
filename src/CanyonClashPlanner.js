@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import './CanyonClashPlanner.css';
 
 const TEAMS = {
@@ -31,8 +31,6 @@ function CanyonClashPlanner() {
     D: 2
   });
 
-  const clamp = (value, min, max) => Math.max(min, Math.min(value, max));
-
   const handleMapClick = (e) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -64,37 +62,49 @@ function CanyonClashPlanner() {
     canvas.height = container.offsetHeight;
     const ctx = canvas.getContext('2d');
 
-    // Fill background
+    // Fill background with color first
+    ctx.fillStyle = '#D4A574';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Try to draw the SVG background
     const bgImage = new Image();
+    bgImage.crossOrigin = 'anonymous';
     bgImage.src = 'background.svg';
     bgImage.onload = () => {
       ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
-
-      // Draw markings
-      markings.forEach((marking) => {
-        const teamColor = TEAMS[marking.team].color;
-        ctx.fillStyle = teamColor;
-        ctx.globalAlpha = 0.6;
-        ctx.fillRect(marking.x - 15, marking.y - 15, 30, 30);
-        ctx.globalAlpha = 1;
-
-        ctx.strokeStyle = teamColor;
-        ctx.lineWidth = 2;
-        ctx.strokeRect(marking.x - 15, marking.y - 15, 30, 30);
-
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 14px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(marking.team, marking.x, marking.y);
-      });
-
-      // Download
-      const link = document.createElement('a');
-      link.href = canvas.toDataURL('image/png');
-      link.download = `canyon-clash-plan-${new Date().toISOString().split('T')[0]}.png`;
-      link.click();
+      drawMarkingsAndExport(ctx, canvas);
     };
+    bgImage.onerror = () => {
+      // If SVG fails to load, just use the color background
+      drawMarkingsAndExport(ctx, canvas);
+    };
+  };
+
+  const drawMarkingsAndExport = (ctx, canvas) => {
+    // Draw markings
+    markings.forEach((marking) => {
+      const teamColor = TEAMS[marking.team].color;
+      ctx.fillStyle = teamColor;
+      ctx.globalAlpha = 0.6;
+      ctx.fillRect(marking.x - 15, marking.y - 15, 30, 30);
+      ctx.globalAlpha = 1;
+
+      ctx.strokeStyle = teamColor;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(marking.x - 15, marking.y - 15, 30, 30);
+
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 14px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(marking.team, marking.x, marking.y);
+    });
+
+    // Download
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL('image/png');
+    link.download = `canyon-clash-plan-${new Date().toISOString().split('T')[0]}.png`;
+    link.click();
   };
 
   return (
