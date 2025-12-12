@@ -20,9 +20,6 @@ const BATTLE_PHASES = [
 
 function CanyonClashPlanner() {
   const containerRef = useRef(null);
-  const [playerX, setPlayerX] = useState(50);
-  const [playerY, setPlayerY] = useState(50);
-  const [isDragging, setIsDragging] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState('A');
   const [markings, setMarkings] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
@@ -34,85 +31,7 @@ function CanyonClashPlanner() {
     D: 2
   });
 
-  const PLAYER_SIZE = 80;
-  const KEYBOARD_STEP = 10;
-
   const clamp = (value, min, max) => Math.max(min, Math.min(value, max));
-
-  const setPlayerPosition = (newX, newY) => {
-    if (!containerRef.current) return;
-    
-    const containerWidth = containerRef.current.offsetWidth;
-    const containerHeight = containerRef.current.offsetHeight;
-
-    const clampedX = clamp(newX, 0, containerWidth - PLAYER_SIZE);
-    const clampedY = clamp(newY, 0, containerHeight - PLAYER_SIZE);
-
-    setPlayerX(clampedX);
-    setPlayerY(clampedY);
-  };
-
-  const handleDragStart = (e) => {
-    e.preventDefault();
-    const rect = e.currentTarget.getBoundingClientRect();
-    
-    if (rect) {
-      setIsDragging(true);
-    }
-  };
-
-  const handleDrag = (e) => {
-    if (!isDragging || !containerRef.current) return;
-
-    const clientX = e.clientX || (e.touches && e.touches[0]?.clientX);
-    const clientY = e.clientY || (e.touches && e.touches[0]?.clientY);
-    const containerRect = containerRef.current.getBoundingClientRect();
-
-    if (clientX && clientY) {
-      const newX = clientX - containerRect.left;
-      const newY = clientY - containerRect.top;
-      setPlayerPosition(newX, newY);
-    }
-  };
-
-  const handleDragEnd = () => {
-    setIsDragging(false);
-  };
-
-  const handleKeyDown = (e) => {
-    let newX = playerX;
-    let newY = playerY;
-    let shouldUpdate = false;
-
-    switch (e.key) {
-      case 'ArrowUp':
-        e.preventDefault();
-        newY -= KEYBOARD_STEP;
-        shouldUpdate = true;
-        break;
-      case 'ArrowDown':
-        e.preventDefault();
-        newY += KEYBOARD_STEP;
-        shouldUpdate = true;
-        break;
-      case 'ArrowLeft':
-        e.preventDefault();
-        newX -= KEYBOARD_STEP;
-        shouldUpdate = true;
-        break;
-      case 'ArrowRight':
-        e.preventDefault();
-        newX += KEYBOARD_STEP;
-        shouldUpdate = true;
-        break;
-      default:
-        return;
-    }
-
-    if (shouldUpdate) {
-      setPlayerPosition(newX, newY);
-    }
-  };
 
   const handleMapClick = (e) => {
     if (!containerRef.current) return;
@@ -178,19 +97,6 @@ function CanyonClashPlanner() {
     };
   };
 
-  useEffect(() => {
-    document.addEventListener('mousemove', handleDrag);
-    document.addEventListener('mouseup', handleDragEnd);
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('mousemove', handleDrag);
-      document.removeEventListener('mouseup', handleDragEnd);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDragging, playerX, playerY, currentTime]);
-
   return (
     <div className="canyon-clash-planner">
       <h1>🗻 Canyon Clash Strategic Planner</h1>
@@ -204,17 +110,6 @@ function CanyonClashPlanner() {
               alt="Canyon Clash Map"
               className="map-background"
             />
-            <div
-              className={`player-viewport ${isDragging ? 'dragging' : ''}`}
-              onMouseDown={handleDragStart}
-              onTouchStart={handleDragStart}
-              style={{
-                left: `${playerX}px`,
-                top: `${playerY}px`
-              }}
-            >
-              <div className="viewport-label">Viewport</div>
-            </div>
 
             {/* Render markings on map */}
             {markings.map((marking) => (
