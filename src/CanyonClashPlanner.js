@@ -135,6 +135,16 @@ function CanyonClashPlanner() {
               >
                 <span className="marking-label">{marking.team}</span>
                 <span className="marking-time">{marking.time}m</span>
+                <button
+                  className="marking-delete-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMarkings(markings.filter(m => m.id !== marking.id));
+                  }}
+                  title="Delete marking"
+                >
+                  ✕
+                </button>
               </div>
             ))}
           </div>
