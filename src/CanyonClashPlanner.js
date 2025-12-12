@@ -5,7 +5,7 @@ const TEAMS = {
   A: { label: 'Team A - Enemy Hospital', color: '#FF6B6B', description: 'Frontline Strike' },
   B: { label: 'Team B - Our Hospital', color: '#4ECDC4', description: 'Defensive Command' },
   C: { label: 'Team C - Captain Side', color: '#FFE66D', description: 'Captain Squadron' },
-  D: { label: 'Team D - Military Centers', color: '#95E1D3', description: 'Resource Squad' }
+  D: { label: 'Team D - Military Centers', color: '#B78DD9', description: 'Resource Squad' }
 };
 
 const BATTLE_PHASES = [
