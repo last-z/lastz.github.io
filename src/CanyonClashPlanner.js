@@ -27,12 +27,27 @@ const TIPS = [
   'Use Energy Core spawn (20 min) as the focal point for final squad coordination and ultimate push.'
 ];
 
+// Spawn area configurations: { topLeft, bottomRight }
+const SPAWN_AREAS = {
+  BLUE_DOWN: {
+    label: 'Blue Spawn (Bottom-Right)',
+    ourSpawn: { label: 'Our Spawn', x1: 0.65, y1: 0.65, x2: 1, y2: 1 },
+    enemySpawn: { label: 'Enemy Spawn', x1: 0, y1: 0, x2: 0.35, y2: 0.35 }
+  },
+  RED_UP: {
+    label: 'Red Spawn (Top-Left)',
+    ourSpawn: { label: 'Our Spawn', x1: 0, y1: 0, x2: 0.35, y2: 0.35 },
+    enemySpawn: { label: 'Enemy Spawn', x1: 0.65, y1: 0.65, x2: 1, y2: 1 }
+  }
+};
+
 function CanyonClashPlanner() {
   const containerRef = useRef(null);
   const [selectedTeam, setSelectedTeam] = useState('A');
   const [markings, setMarkings] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
   const [showTipsModal, setShowTipsModal] = useState(false);
+  const [teamSpawn, setTeamSpawn] = useState('BLUE_DOWN'); // BLUE_DOWN or RED_UP
   const maxTime = 40;
   const [teamTimings, setTeamTimings] = useState({
     A: 0,
@@ -60,6 +75,35 @@ function CanyonClashPlanner() {
 
   const handleTeamTimingChange = (team, value) => {
     setTeamTimings({ ...teamTimings, [team]: parseFloat(value) });
+  };
+
+  // Helper function to get spawn area configuration
+  const getSpawnConfig = () => {
+    return SPAWN_AREAS[teamSpawn];
+  };
+
+  // Helper function to check if position is in spawn area
+  const isInSpawnArea = (x, y, area) => {
+    if (!containerRef.current) return false;
+    const width = containerRef.current.offsetWidth;
+    const height = containerRef.current.offsetHeight;
+    const normalizedX = x / width;
+    const normalizedY = y / height;
+    return (
+      normalizedX >= area.x1 && normalizedX <= area.x2 &&
+      normalizedY >= area.y1 && normalizedY <= area.y2
+    );
+  };
+
+  // Get suggestion text based on team selection and spawn
+  const getTeamSuggestion = (team) => {
+    const spawn = getSpawnConfig();
+    if (team === 'A') {
+      return `Deploy at ${spawn.enemySpawn.label}`;
+    } else if (team === 'B') {
+      return `Deploy near ${spawn.ourSpawn.label}`;
+    }
+    return '';
   };
 
   const handleExportPlan = () => {
@@ -190,6 +234,39 @@ function CanyonClashPlanner() {
               className="map-background"
             />
 
+            {/* Spawn Area Indicators */}
+            {(() => {
+              const spawn = getSpawnConfig();
+              const width = containerRef.current?.offsetWidth || 800;
+              const height = containerRef.current?.offsetHeight || 600;
+              return (
+                <>
+                  {/* Our Spawn Area */}
+                  <div
+                    className="spawn-area spawn-our"
+                    style={{
+                      left: `${spawn.ourSpawn.x1 * 100}%`,
+                      top: `${spawn.ourSpawn.y1 * 100}%`,
+                      width: `${(spawn.ourSpawn.x2 - spawn.ourSpawn.x1) * 100}%`,
+                      height: `${(spawn.ourSpawn.y2 - spawn.ourSpawn.y1) * 100}%`,
+                    }}
+                    title="Our Spawn Area"
+                  />
+                  {/* Enemy Spawn Area */}
+                  <div
+                    className="spawn-area spawn-enemy"
+                    style={{
+                      left: `${spawn.enemySpawn.x1 * 100}%`,
+                      top: `${spawn.enemySpawn.y1 * 100}%`,
+                      width: `${(spawn.enemySpawn.x2 - spawn.enemySpawn.x1) * 100}%`,
+                      height: `${(spawn.enemySpawn.y2 - spawn.enemySpawn.y1) * 100}%`,
+                    }}
+                    title="Enemy Spawn Area"
+                  />
+                </>
+              );
+            })()}
+
             {/* Render markings on map */}
             {markings.map((marking) => (
               <div
@@ -221,6 +298,32 @@ function CanyonClashPlanner() {
 
         {/* Right Panel */}
         <div className="right-panel">
+          {/* Spawn Selection */}
+          <div className="spawn-selector">
+            <h3>🏁 Our Spawn Position</h3>
+            <div className="spawn-buttons">
+              <button
+                className={`spawn-btn ${teamSpawn === 'BLUE_DOWN' ? 'active' : ''}`}
+                onClick={() => setTeamSpawn('BLUE_DOWN')}
+                title="We spawn at bottom-right"
+              >
+                🔵 Blue (Bottom)
+              </button>
+              <button
+                className={`spawn-btn ${teamSpawn === 'RED_UP' ? 'active' : ''}`}
+                onClick={() => setTeamSpawn('RED_UP')}
+                title="We spawn at top-left"
+              >
+                🔴 Red (Top)
+              </button>
+            </div>
+            <p className="spawn-info">
+              {teamSpawn === 'BLUE_DOWN' 
+                ? '📍 Team A attacks from top-left | Team B defends bottom-right'
+                : '📍 Team A attacks from bottom-right | Team B defends top-left'}
+            </p>
+          </div>
+
           {/* Team Selection */}
           <div className="team-controls">
             <h3>Select Team to Mark</h3>
