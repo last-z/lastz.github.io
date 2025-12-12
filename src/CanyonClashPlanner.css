@@ -44,12 +44,19 @@
   color: #333;
   font-weight: bold;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .info-btn:hover {
   background: linear-gradient(135deg, #fff, #fff);
   transform: scale(1.12);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.info-btn:focus {
+  outline-color: #333;
+  outline-width: 2px;
 }
 
 .tips-modal {
@@ -326,6 +333,8 @@
   font-weight: 600;
   transition: all 0.3s ease;
   font-size: 13px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .team-btn:hover {
@@ -334,11 +343,17 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.team-btn:active {
+  transform: translateY(0);
+  transition: all 0.1s ease;
+}
+
 .team-btn.active {
   background-color: #fff;
   border-color: currentColor;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
   transform: scale(1.02);
+  outline-color: currentColor;
 }
 
 .dot {
@@ -667,6 +682,8 @@
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .btn-export {
@@ -680,6 +697,11 @@
   transform: translateY(-2px);
 }
 
+.btn-export:focus {
+  outline-color: #4ECDC4;
+  outline-width: 2px;
+}
+
 .btn-clear {
   background-color: #FF6B6B;
   color: #fff;
@@ -689,6 +711,11 @@
   background-color: #e55555;
   box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
   transform: translateY(-2px);
+}
+
+.btn-clear:focus {
+  outline-color: #FF6B6B;
+  outline-width: 2px;
 }
 
 /* Scrollbar styling */
