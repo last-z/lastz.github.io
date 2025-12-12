@@ -83,12 +83,13 @@ function CanyonClashPlanner() {
   };
 
   // Helper function to check if position is in spawn area
+  // eslint-disable-next-line no-unused-vars
   const isInSpawnArea = (x, y, area) => {
     if (!containerRef.current) return false;
-    const width = containerRef.current.offsetWidth;
-    const height = containerRef.current.offsetHeight;
-    const normalizedX = x / width;
-    const normalizedY = y / height;
+    const containerWidth = containerRef.current.offsetWidth;
+    const containerHeight = containerRef.current.offsetHeight;
+    const normalizedX = x / containerWidth;
+    const normalizedY = y / containerHeight;
     return (
       normalizedX >= area.x1 && normalizedX <= area.x2 &&
       normalizedY >= area.y1 && normalizedY <= area.y2
@@ -96,6 +97,7 @@ function CanyonClashPlanner() {
   };
 
   // Get suggestion text based on team selection and spawn
+  // eslint-disable-next-line no-unused-vars
   const getTeamSuggestion = (team) => {
     const spawn = getSpawnConfig();
     if (team === 'A') {
@@ -237,8 +239,6 @@ function CanyonClashPlanner() {
             {/* Spawn Area Indicators */}
             {(() => {
               const spawn = getSpawnConfig();
-              const width = containerRef.current?.offsetWidth || 800;
-              const height = containerRef.current?.offsetHeight || 600;
               return (
                 <>
                   {/* Our Spawn Area */}
