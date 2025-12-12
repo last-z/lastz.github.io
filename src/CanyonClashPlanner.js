@@ -50,6 +50,7 @@ function CanyonClashPlanner() {
   const [currentTime, setCurrentTime] = useState(0);
   const [showTipsModal, setShowTipsModal] = useState(false);
   const [teamSpawn, setTeamSpawn] = useState('BLUE_DOWN'); // BLUE_DOWN or RED_UP
+  const [isPlaying, setIsPlaying] = useState(false);
   const maxTime = 40;
   const [teamTimings, setTeamTimings] = useState({
     A: 0,
@@ -57,6 +58,23 @@ function CanyonClashPlanner() {
     C: 4,
     D: 4
   });
+
+  // Auto-advance time when playing
+  React.useEffect(() => {
+    if (!isPlaying) return;
+
+    const interval = setInterval(() => {
+      setCurrentTime((prevTime) => {
+        if (prevTime >= maxTime) {
+          setIsPlaying(false);
+          return maxTime;
+        }
+        return prevTime + 0.2;
+      });
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [isPlaying, maxTime]);
 
   const handleMapClick = (e) => {
     if (!containerRef.current) return;
@@ -288,8 +306,8 @@ function CanyonClashPlanner() {
               );
             })()}
 
-            {/* Render markings on map - filtered by current time */}
-            {markings.filter(marking => marking.time <= currentTime).map((marking) => (
+            {/* Render markings on map - filtered by exact current time */}
+            {markings.filter(marking => Math.abs(marking.time - currentTime) < 0.3).map((marking) => (
               <div
                 key={marking.id}
                 className="marking"
@@ -366,14 +384,33 @@ function CanyonClashPlanner() {
 
           {/* Timeline Slider */}
           <div className="timeline-section">
-            <h3>{t('battleTimeline')}</h3>
+            <div className="timeline-header">
+              <h3>⏱️ {t('battleTimeline')}</h3>
+              <button
+                className={`play-btn ${isPlaying ? 'playing' : ''}`}
+                onClick={() => {
+                  if (currentTime >= maxTime) {
+                    setCurrentTime(0);
+                    setIsPlaying(true);
+                  } else {
+                    setIsPlaying(!isPlaying);
+                  }
+                }}
+                title={isPlaying ? 'Pause' : 'Play'}
+              >
+                {isPlaying ? '⏸' : '▶'}
+              </button>
+            </div>
             <div className="slider-container">
               <input
                 type="range"
                 min="0"
                 max={maxTime}
                 value={currentTime}
-                onChange={(e) => setCurrentTime(parseFloat(e.target.value))}
+                onChange={(e) => {
+                  setCurrentTime(parseFloat(e.target.value));
+                  if (isPlaying) setIsPlaying(false);
+                }}
                 className="time-slider"
               />
               <div className="time-display">{currentTime.toFixed(1)} / {maxTime} {t('min')}</div>
@@ -430,13 +467,13 @@ function CanyonClashPlanner() {
 
           {/* Markings List */}
           <div className="markings-section">
-            <h3>📍 {t('markings')} ({markings.filter(m => m.time <= currentTime).length}/{markings.length})</h3>
+            <h3>📍 {t('markings')} ({markings.filter(m => Math.abs(m.time - currentTime) < 0.3).length}/{markings.length})</h3>
             <div className="markings-list">
               {markings.length === 0 ? (
                 <p className="empty-message">{t('noMarkings')}</p>
               ) : (
                 markings.map((marking) => {
-                  const isActive = marking.time <= currentTime;
+                  const isActive = Math.abs(marking.time - currentTime) < 0.3;
                   return (
                     <div 
                       key={marking.id} 
