@@ -98,6 +98,25 @@ canyon-clash-planner/
 - Canvas API
 - SVG
 - CSS3
+- **i18next** - Internacionalización y gestión de idiomas
+- **react-i18next** - Integración de i18next con React
+
+### 🌍 Soporte Multilingüe (i18n)
+La aplicación ahora soporta 8 idiomas:
+- 🇺🇸 English
+- 🇨🇳 中文 (Simplified Chinese)
+- 🇹🇼 繁體中文 (Traditional Chinese)
+- 🇫🇷 Français
+- 🇩🇪 Deutsch
+- 🇪🇸 Español
+- 🇯🇵 日本語
+- 🇰🇷 한국어
+
+**Características i18n:**
+- Selector de idioma en la parte superior de la aplicación
+- Traducción dinámica de toda la interfaz
+- Persistencia de idioma en localStorage
+- Fallback automático a inglés si hay datos faltantes
 
 ---
 
