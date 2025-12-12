@@ -233,7 +233,11 @@ function CanyonClashPlanner() {
               </div>
             ))}
           </div>
+        </div>
 
+        {/* Right Panel */}
+        <div className="right-panel">
+          {/* Team Selection */}
           <div className="team-controls">
             <h3>Select Team to Mark</h3>
             <div className="team-buttons">
@@ -251,10 +255,7 @@ function CanyonClashPlanner() {
             </div>
             <p className="current-time">Time: {currentTime}m | Click to mark</p>
           </div>
-        </div>
 
-        {/* Right Panel */}
-        <div className="right-panel">
           {/* Timeline Slider */}
           <div className="timeline-section">
             <h3>⏱️ Battle Timeline</h3>
