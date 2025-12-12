@@ -1,33 +1,107 @@
-# Getting Started with Create React App
+# 🗻 Canyon Clash Strategic Planner
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Una herramienta web interactiva para planificar y coordinar estrategias de batalla en el juego competitivo **Canyon Clash**.
 
-## Available Scripts
+## Características
 
-In the project directory, you can run:
+### 🗺️ Explorador de Mapa
+- **Mapa SVG interactivo** - Visualiza el mapa completo de Canyon Clash
+- **Navegación por viewport** - Arrastra la ventana de visualización o usa las teclas de flecha
+- **Entrada de letra** - Presiona A, B, C, D para marcar equipos rápidamente
+- **Coordenadas en tiempo real** - Ve las coordenadas exactas mientras navegas
 
-### `npm start`
+### ⏱️ Línea de Tiempo de Batalla
+- **Slider de 0-20 minutos** - Controla la progresión de la batalla
+- **Marcadores de fases** - Visualiza eventos importantes:
+  - **0m** - Fase de Preparación (Starters entran)
+  - **1m** - Phase I comienza (Hospitales y Refinerías accesibles)
+  - **3m, 6m, 9m** - Teletransportes gratuitos disponibles
+  - **10m** - Núcleo de Energía aparece
+  - **20m** - Batalla termina
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 👥 Coordinación de Equipos
+- **4 Equipos de color** - A (Rojo), B (Cian), C (Amarillo), D (Verde)
+  - **Team A** - Hospital del Enemigo
+  - **Team B** - Nuestro Hospital
+  - **Team C** - Lado del Capitán
+  - **Team D** - Centros Militares
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Sliders de tiempo de ataque** - Configura cuándo cada equipo ataca
+- **Tiempos por defecto**:
+  - Teams A & B: 0 minutos (inicio inmediato)
+  - Teams C & D: 2 minutos (ataque retrasado)
 
-### `npm test`
+### 📍 Marcadores Estratégicos
+- **Haz clic en el mapa** - Marca posiciones de equipo con coordenadas y tiempo
+- **Lista de marcadores** - Ve todos tus marcadores con opción de eliminar
+- **Timestamps automáticos** - Cada marcador registra el tiempo de la línea de tiempo
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 💾 Exportar Estrategia
+- **Exporta como PNG** - Descarga tu plan estratégico como imagen
+- **Incluye todo** - Mapa, viewport, marcadores de equipo y timeline
 
-### `npm run build`
+## Instalación y Uso
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Requisitos
+- Node.js 14+
+- npm 6+
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Instalación
+```bash
+# Clonar el repositorio
+git clone https://github.com/lastz/canyon-clash-planner.git
+cd canyon-clash-planner
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Instalar dependencias
+npm install
+
+# Iniciar servidor de desarrollo
+npm start
+
+# Crear build de producción
+npm run build
+```
+
+## Guía de Uso
+
+### Navegación Básica
+1. **Arrastra el viewport** gris sobre el mapa para explorar
+2. **Teclas de flecha** para movimiento fino (10px por paso)
+3. **Presiona A/B/C/D** para cambiar equipos rápidamente
+
+### Planificación Estratégica
+1. Selecciona un equipo con los botones de color
+2. Ajusta la línea de tiempo principal (slider 0-20m)
+3. Haz clic en el mapa para marcar la posición del equipo
+4. Ajusta tiempos de ataque en el panel derecho
+5. Exporta como PNG para compartir
+
+## Estructura del Proyecto
+
+```
+canyon-clash-planner/
+├── public/
+│   ├── background.svg
+│   ├── demo/
+│   └── index.html
+├── src/
+│   ├── CanyonClashPlanner.js
+│   ├── CanyonClashPlanner.css
+│   ├── App.js
+│   └── ...
+└── README.md
+```
+
+## Tecnologías
+
+- React 18
+- Canvas API
+- SVG
+- CSS3
+
+---
+
+**Última actualización:** 2024
 
 ### `npm run eject`
 
