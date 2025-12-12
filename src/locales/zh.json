@@ -1,0 +1,57 @@
+{
+  "title": "🗻 峡谷冲突策略规划师",
+  "battleTips": "战斗技巧与策略",
+  "selectTeam": "选择要标记的队伍",
+  "spawnPosition": "🏁 我们的出生点位置",
+  "blueSpawn": "🔵 蓝色（底部）",
+  "redSpawn": "🔴 红色（顶部）",
+  "blueSpawnInfo": "📍 A队从左上方进攻 | B队在右下方防守",
+  "redSpawnInfo": "📍 A队从右下方进攻 | B队在左上方防守",
+  "clickToMark": "点击标记",
+  "time": "时间",
+  "min": "分钟",
+  "battleTimeline": "⏱️ 战斗时间线",
+  "teamAttackTimes": "⏰ 队伍进攻时间",
+  "markings": "📍 标记",
+  "exportPlan": "导出计划",
+  "clearAll": "清除全部",
+  "noMarkings": "暂无标记",
+  "deletMarking": "删除标记",
+  "selectLanguage": "语言",
+  "tips": {
+    "tip1": "分批治疗部队（每批100个）以避免浪费治疗加速。所有部队将在比赛结束时恢复。",
+    "tip2": "攻击总部不消耗燃料 - 要战略性地利用。",
+    "tip3": "摧毁一个总部可以防止敌人从该位置部署部队。",
+    "tip4": "如果建筑物中的部队血量过低，轮流替换以保持防御位置。",
+    "tip5": "每3分钟提供一次免费传送，无冷却时间 - 完美时机对目标进行捕获。",
+    "tip6": "将能量核心出现（20分钟）作为最终队伍协调和终极推进的焦点。"
+  },
+  "teams": {
+    "A": "A队 - 敌方医院",
+    "B": "B队 - 我方医院",
+    "C": "C队 - 队长侧翼",
+    "D": "D队 - 军事中心"
+  },
+  "teamDescriptions": {
+    "A": "前线打击",
+    "B": "防守指挥",
+    "C": "队长中队",
+    "D": "资源班队"
+  },
+  "battlePhases": {
+    "prepPhase": "准备阶段",
+    "prepPhaseDesc": "先发队员进入战场",
+    "phaseIStart": "第一阶段开始",
+    "phaseIStartDesc": "医院和水精炼厂可进入",
+    "freeTeleport1": "免费传送 1",
+    "freeTeleport1Desc": "第一次免费传送可用",
+    "freeTeleport2": "免费传送 2",
+    "freeTeleport2Desc": "第二次免费传送可用",
+    "energyCore": "能量核心",
+    "energyCoreDesc": "能量核心出现",
+    "freeTeleport3": "免费传送 3",
+    "freeTeleport3Desc": "第三次免费传送可用",
+    "battleEnd": "战斗结束",
+    "battleEndDesc": "战斗结束"
+  }
+}

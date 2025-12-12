@@ -1,0 +1,57 @@
+{
+  "title": "🗻 キャニオンクラッシュ戦略プランナー",
+  "battleTips": "戦闘のヒントと戦略",
+  "selectTeam": "マークするチームを選択",
+  "spawnPosition": "🏁 私たちのスポーン位置",
+  "blueSpawn": "🔵 ブルー（下）",
+  "redSpawn": "🔴 レッド（上）",
+  "blueSpawnInfo": "📍 チームAは左上から攻撃 | チームBは右下を防衛",
+  "redSpawnInfo": "📍 チームAは右下から攻撃 | チームBは左上を防衛",
+  "clickToMark": "クリックしてマーク",
+  "time": "時間",
+  "min": "分",
+  "battleTimeline": "⏱️ 戦闘タイムライン",
+  "teamAttackTimes": "⏰ チーム攻撃時間",
+  "markings": "📍 マーク",
+  "exportPlan": "プランをエクスポート",
+  "clearAll": "すべてクリア",
+  "noMarkings": "マークなし",
+  "deletMarking": "マークを削除",
+  "selectLanguage": "言語",
+  "tips": {
+    "tip1": "治療スピードアップの無駄を避けるため、100単位でユニットを治療してください。すべてのユニットはマッチ終了時に治療されます。",
+    "tip2": "本部の攻撃は燃料を消費しません - 戦略的に使用してください。",
+    "tip3": "本部を破壊すると、敵がその場所からユニットを配備するのを防ぐことができます。",
+    "tip4": "建物のユニットの体力が低い場合は、防御位置を維持するために交代してください。",
+    "tip5": "無料テレポートは3分ごと利用可能で、クールダウンはありません - 目標キャプチャのために完璧なタイミングを取ってください。",
+    "tip6": "エネルギーコア出現（20分）を最終的なチーム調整と究極のプッシュの焦点として使用してください。"
+  },
+  "teams": {
+    "A": "チームA - 敵の病院",
+    "B": "チームB - 私たちの病院",
+    "C": "チームC - キャプテンサイド",
+    "D": "チームD - 軍事センター"
+  },
+  "teamDescriptions": {
+    "A": "前線ストライク",
+    "B": "防御指揮",
+    "C": "キャプテン中隊",
+    "D": "リソースチーム"
+  },
+  "battlePhases": {
+    "prepPhase": "準備フェーズ",
+    "prepPhaseDesc": "スターターが戦場に突入",
+    "phaseIStart": "フェーズI開始",
+    "phaseIStartDesc": "病院と水精製所にアクセス可能",
+    "freeTeleport1": "無料テレポート1",
+    "freeTeleport1Desc": "最初の無料テレポート利用可能",
+    "freeTeleport2": "無料テレポート2",
+    "freeTeleport2Desc": "2番目の無料テレポート利用可能",
+    "energyCore": "エネルギーコア",
+    "energyCoreDesc": "エネルギーコアが出現",
+    "freeTeleport3": "無料テレポート3",
+    "freeTeleport3Desc": "3番目の無料テレポート利用可能",
+    "battleEnd": "戦闘終了",
+    "battleEndDesc": "戦闘が終了"
+  }
+}

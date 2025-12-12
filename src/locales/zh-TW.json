@@ -1,0 +1,57 @@
+{
+  "title": "🗻 峽谷衝突策略規劃師",
+  "battleTips": "戰鬥技巧與策略",
+  "selectTeam": "選擇要標記的隊伍",
+  "spawnPosition": "🏁 我們的出生點位置",
+  "blueSpawn": "🔵 藍色（底部）",
+  "redSpawn": "🔴 紅色（頂部）",
+  "blueSpawnInfo": "📍 A隊從左上方進攻 | B隊在右下方防守",
+  "redSpawnInfo": "📍 A隊從右下方進攻 | B隊在左上方防守",
+  "clickToMark": "點擊標記",
+  "time": "時間",
+  "min": "分鐘",
+  "battleTimeline": "⏱️ 戰鬥時間線",
+  "teamAttackTimes": "⏰ 隊伍進攻時間",
+  "markings": "📍 標記",
+  "exportPlan": "匯出計劃",
+  "clearAll": "清除全部",
+  "noMarkings": "暫無標記",
+  "deletMarking": "刪除標記",
+  "selectLanguage": "語言",
+  "tips": {
+    "tip1": "分批治療部隊（每批100個）以避免浪費治療加速。所有部隊將在比賽結束時恢復。",
+    "tip2": "攻擊總部不消耗燃料 - 要戰略性地利用。",
+    "tip3": "摧毀一個總部可以防止敵人從該位置部署部隊。",
+    "tip4": "如果建築物中的部隊血量過低，輪流替換以保持防御位置。",
+    "tip5": "每3分鐘提供一次免費傳送，無冷卻時間 - 完美時機對目標進行捕獲。",
+    "tip6": "將能量核心出現（20分鐘）作為最終隊伍協調和終極推進的焦點。"
+  },
+  "teams": {
+    "A": "A隊 - 敵方醫院",
+    "B": "B隊 - 我方醫院",
+    "C": "C隊 - 隊長側翼",
+    "D": "D隊 - 軍事中心"
+  },
+  "teamDescriptions": {
+    "A": "前線打擊",
+    "B": "防守指揮",
+    "C": "隊長中隊",
+    "D": "資源班隊"
+  },
+  "battlePhases": {
+    "prepPhase": "準備階段",
+    "prepPhaseDesc": "先發隊員進入戰場",
+    "phaseIStart": "第一階段開始",
+    "phaseIStartDesc": "醫院和水精煉廠可進入",
+    "freeTeleport1": "免費傳送 1",
+    "freeTeleport1Desc": "第一次免費傳送可用",
+    "freeTeleport2": "免費傳送 2",
+    "freeTeleport2Desc": "第二次免費傳送可用",
+    "energyCore": "能量核心",
+    "energyCoreDesc": "能量核心出現",
+    "freeTeleport3": "免費傳送 3",
+    "freeTeleport3Desc": "第三次免費傳送可用",
+    "battleEnd": "戰鬥結束",
+    "battleEndDesc": "戰鬥結束"
+  }
+}

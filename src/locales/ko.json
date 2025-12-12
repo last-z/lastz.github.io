@@ -1,0 +1,57 @@
+{
+  "title": "🗻 협곡 충돌 전략 계획자",
+  "battleTips": "전투 팁 및 전략",
+  "selectTeam": "마크할 팀 선택",
+  "spawnPosition": "🏁 우리의 스폰 위치",
+  "blueSpawn": "🔵 파란색(하단)",
+  "redSpawn": "🔴 빨간색(상단)",
+  "blueSpawnInfo": "📍 팀A는 좌상단에서 공격 | 팀B는 우하단에서 방어",
+  "redSpawnInfo": "📍 팀A는 우하단에서 공격 | 팀B는 좌상단에서 방어",
+  "clickToMark": "마크하려면 클릭",
+  "time": "시간",
+  "min": "분",
+  "battleTimeline": "⏱️ 전투 타임라인",
+  "teamAttackTimes": "⏰ 팀 공격 시간",
+  "markings": "📍 마크",
+  "exportPlan": "계획 내보내기",
+  "clearAll": "모두 지우기",
+  "noMarkings": "마크 없음",
+  "deletMarking": "마크 삭제",
+  "selectLanguage": "언어",
+  "tips": {
+    "tip1": "치유 스피드업 낭비를 피하기 위해 100단위로 군대를 치유합니다. 모든 군대는 경기 종료 시 치유됩니다.",
+    "tip2": "본부 공격은 연료를 사용하지 않습니다 - 전략적으로 사용하세요.",
+    "tip3": "본부를 파괴하면 적이 해당 위치에서 군대를 배포하는 것을 방지합니다.",
+    "tip4": "건물의 군대 체력이 낮으면 방어 위치를 유지하기 위해 교대합니다.",
+    "tip5": "3분마다 무료 텔레포트 사용 가능하며 쿨다운 없음 - 목표 캡처를 위해 완벽한 시간을 맞추세요.",
+    "tip6": "에너지 코어 스폰(20분)을 최종 팀 조율 및 궁극적 진격의 초점으로 사용하세요."
+  },
+  "teams": {
+    "A": "팀A - 적 병원",
+    "B": "팀B - 우리 병원",
+    "C": "팀C - 캡틴 측",
+    "D": "팀D - 군사 센터"
+  },
+  "teamDescriptions": {
+    "A": "전선 공격",
+    "B": "방어 지휘",
+    "C": "캡틴 중대",
+    "D": "자원 분대"
+  },
+  "battlePhases": {
+    "prepPhase": "준비 단계",
+    "prepPhaseDesc": "선발 선수들이 전장에 진입",
+    "phaseIStart": "페이즈 I 시작",
+    "phaseIStartDesc": "병원 및 수정제소 접근 가능",
+    "freeTeleport1": "무료 텔레포트 1",
+    "freeTeleport1Desc": "첫 번째 무료 텔레포트 사용 가능",
+    "freeTeleport2": "무료 텔레포트 2",
+    "freeTeleport2Desc": "두 번째 무료 텔레포트 사용 가능",
+    "energyCore": "에너지 코어",
+    "energyCoreDesc": "에너지 코어가 나타남",
+    "freeTeleport3": "무료 텔레포트 3",
+    "freeTeleport3Desc": "세 번째 무료 텔레포트 사용 가능",
+    "battleEnd": "전투 종료",
+    "battleEndDesc": "전투 종료"
+  }
+}

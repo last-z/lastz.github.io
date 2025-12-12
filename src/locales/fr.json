@@ -1,0 +1,57 @@
+{
+  "title": "🗻 Planificateur Stratégique Canyon Clash",
+  "battleTips": "Conseils et Stratégies de Combat",
+  "selectTeam": "Sélectionner l'équipe à marquer",
+  "spawnPosition": "🏁 Position de notre point d'apparition",
+  "blueSpawn": "🔵 Bleu (Bas)",
+  "redSpawn": "🔴 Rouge (Haut)",
+  "blueSpawnInfo": "📍 L'équipe A attaque depuis le haut-gauche | L'équipe B défend en bas-droite",
+  "redSpawnInfo": "📍 L'équipe A attaque depuis le bas-droite | L'équipe B défend en haut-gauche",
+  "clickToMark": "Cliquer pour marquer",
+  "time": "Temps",
+  "min": "min",
+  "battleTimeline": "⏱️ Chronologie de la Bataille",
+  "teamAttackTimes": "⏰ Temps d'Attaque des Équipes",
+  "markings": "📍 Marquages",
+  "exportPlan": "Exporter le Plan",
+  "clearAll": "Tout Effacer",
+  "noMarkings": "Aucun marquage",
+  "deletMarking": "Supprimer le marquage",
+  "selectLanguage": "Langue",
+  "tips": {
+    "tip1": "Guérissez les troupes par lots de 100 pour éviter de gaspiller les accélérateurs de guérison. Toutes les troupes seront guéries à la fin du match.",
+    "tip2": "Attaquer les QG n'utilise pas de carburant - utilisez-le stratégiquement.",
+    "tip3": "Détruire un QG empêche l'ennemi de déployer des troupes à partir de cet endroit.",
+    "tip4": "Faites pivoter les troupes dans les bâtiments si elles ont peu de santé pour maintenir les positions défensives.",
+    "tip5": "Téléportation gratuite disponible toutes les 3 minutes sans temps de recharge - chronométrez-les parfaitement pour les captures d'objectifs.",
+    "tip6": "Utilisez l'apparition du Noyau d'Énergie (20 min) comme point focal pour la coordination finale des équipes et la poussée ultime."
+  },
+  "teams": {
+    "A": "Équipe A - Hôpital Ennemi",
+    "B": "Équipe B - Notre Hôpital",
+    "C": "Équipe C - Côté Capitaine",
+    "D": "Équipe D - Centres Militaires"
+  },
+  "teamDescriptions": {
+    "A": "Frappe de Première Ligne",
+    "B": "Commandement Défensif",
+    "C": "Escadron Capitaine",
+    "D": "Escouade Ressources"
+  },
+  "battlePhases": {
+    "prepPhase": "Phase de Préparation",
+    "prepPhaseDesc": "Les titulaires entrent sur le champ de bataille",
+    "phaseIStart": "Début de la Phase I",
+    "phaseIStartDesc": "Hôpital et Raffinerie d'Eau accessibles",
+    "freeTeleport1": "Téléportation Gratuite 1",
+    "freeTeleport1Desc": "Première téléportation gratuite disponible",
+    "freeTeleport2": "Téléportation Gratuite 2",
+    "freeTeleport2Desc": "Deuxième téléportation gratuite disponible",
+    "energyCore": "Noyau d'Énergie",
+    "energyCoreDesc": "Le Noyau d'Énergie apparaît",
+    "freeTeleport3": "Téléportation Gratuite 3",
+    "freeTeleport3Desc": "Troisième téléportation gratuite disponible",
+    "battleEnd": "Fin de la Bataille",
+    "battleEndDesc": "La bataille se termine"
+  }
+}

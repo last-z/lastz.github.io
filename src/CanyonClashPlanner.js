@@ -1,30 +1,31 @@
 import React, { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import './CanyonClashPlanner.css';
 
 const TEAMS = {
-  A: { label: 'Team A - Enemy Hospital', color: '#FF6B6B', description: 'Frontline Strike' },
-  B: { label: 'Team B - Our Hospital', color: '#4ECDC4', description: 'Defensive Command' },
-  C: { label: 'Team C - Captain Side', color: '#FFE66D', description: 'Captain Squadron' },
-  D: { label: 'Team D - Military Centers', color: '#B78DD9', description: 'Resource Squad' }
+  A: { labelKey: 'teams.A', color: '#FF6B6B', descKey: 'teamDescriptions.A' },
+  B: { labelKey: 'teams.B', color: '#4ECDC4', descKey: 'teamDescriptions.B' },
+  C: { labelKey: 'teams.C', color: '#FFE66D', descKey: 'teamDescriptions.C' },
+  D: { labelKey: 'teams.D', color: '#B78DD9', descKey: 'teamDescriptions.D' }
 };
 
 const BATTLE_PHASES = [
-  { name: 'Prep Phase', time: 0, description: 'Starters enter battlefield' },
-  { name: 'Phase I Start', time: 2, description: 'Hospital & Water Refinery accessible' },
-  { name: 'Free Teleport 1', time: 6, description: 'First free teleport available' },
-  { name: 'Free Teleport 2', time: 12, description: 'Second free teleport available' },
-  { name: 'Energy Core', time: 20, description: 'Energy Core appears' },
-  { name: 'Free Teleport 3', time: 18, description: 'Third free teleport available' },
-  { name: 'Battle End', time: 40, description: 'Battle concludes' }
+  { nameKey: 'battlePhases.prepPhase', timeKey: 'battlePhases.prepPhaseDesc', time: 0 },
+  { nameKey: 'battlePhases.phaseIStart', timeKey: 'battlePhases.phaseIStartDesc', time: 2 },
+  { nameKey: 'battlePhases.freeTeleport1', timeKey: 'battlePhases.freeTeleport1Desc', time: 6 },
+  { nameKey: 'battlePhases.freeTeleport2', timeKey: 'battlePhases.freeTeleport2Desc', time: 12 },
+  { nameKey: 'battlePhases.energyCore', timeKey: 'battlePhases.energyCoreDesc', time: 20 },
+  { nameKey: 'battlePhases.freeTeleport3', timeKey: 'battlePhases.freeTeleport3Desc', time: 18 },
+  { nameKey: 'battlePhases.battleEnd', timeKey: 'battlePhases.battleEndDesc', time: 40 }
 ];
 
 const TIPS = [
-  'Heal troops in batches of 100 to avoid wasting healing speed-ups. All troops will be healed at end of match.',
-  'Attacking HQs does not use fuel - use this strategically.',
-  'Destroying an HQ prevents the enemy from deploying troops from that location.',
-  'Rotate troops in buildings if they are low on health to maintain defensive positions.',
-  'Free teleports available every 3 minutes with no cooldown - time them perfectly for objective captures.',
-  'Use Energy Core spawn (20 min) as the focal point for final squad coordination and ultimate push.'
+  'tips.tip1',
+  'tips.tip2',
+  'tips.tip3',
+  'tips.tip4',
+  'tips.tip5',
+  'tips.tip6'
 ];
 
 // Spawn area configurations: { topLeft, bottomRight }
@@ -42,6 +43,7 @@ const SPAWN_AREAS = {
 };
 
 function CanyonClashPlanner() {
+  const { t, i18n } = useTranslation();
   const containerRef = useRef(null);
   const [selectedTeam, setSelectedTeam] = useState('A');
   const [markings, setMarkings] = useState([]);
@@ -184,7 +186,7 @@ function CanyonClashPlanner() {
       ctx.fillStyle = team.color;
       ctx.fillRect(x, legendY, 12, 12);
       ctx.fillStyle = '#333';
-      ctx.fillText(key + ' - ' + team.description, x + 16, legendY + 9);
+      ctx.fillText(key + ' - ' + t(team.descKey), x + 16, legendY + 9);
     });
 
     // Download
@@ -197,20 +199,39 @@ function CanyonClashPlanner() {
   return (
     <div className="canyon-clash-planner">
       <div className="header-container">
-        <h1>🗻 Canyon Clash Strategic Planner</h1>
-        <button 
-          className="info-btn"
-          onClick={() => setShowTipsModal(!showTipsModal)}
-          title="Battle Tips"
-        >
-          ℹ
-        </button>
+        <h1>{t('title')}</h1>
+        <div className="header-controls">
+          <select 
+            value={i18n.language} 
+            onChange={(e) => {
+              i18n.changeLanguage(e.target.value);
+              localStorage.setItem('language', e.target.value);
+            }}
+            className="language-selector"
+          >
+            <option value="en">English</option>
+            <option value="zh">简体中文</option>
+            <option value="zh-TW">繁體中文</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="es">Español</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+          </select>
+          <button 
+            className="info-btn"
+            onClick={() => setShowTipsModal(!showTipsModal)}
+            title="Battle Tips"
+          >
+            ℹ
+          </button>
+        </div>
       </div>
 
       {showTipsModal && (
         <div className="tips-modal">
           <div className="tips-content">
-            <h2>Battle Tips & Strategy</h2>
+            <h2>{t('battleTips')}</h2>
             <button 
               className="modal-close"
               onClick={() => setShowTipsModal(false)}
@@ -218,8 +239,8 @@ function CanyonClashPlanner() {
               ✕
             </button>
             <ul className="tips-list">
-              {TIPS.map((tip, idx) => (
-                <li key={idx}>{tip}</li>
+              {TIPS.map((tipKey, idx) => (
+                <li key={idx}>{t(tipKey)}</li>
               ))}
             </ul>
           </div>
@@ -300,33 +321,33 @@ function CanyonClashPlanner() {
         <div className="right-panel">
           {/* Spawn Selection */}
           <div className="spawn-selector">
-            <h3>🏁 Our Spawn Position</h3>
+            <h3>{t('spawnPosition')}</h3>
             <div className="spawn-buttons">
               <button
                 className={`spawn-btn ${teamSpawn === 'BLUE_DOWN' ? 'active' : ''}`}
                 onClick={() => setTeamSpawn('BLUE_DOWN')}
                 title="We spawn at bottom-right"
               >
-                🔵 Blue (Bottom)
+                {t('blueSpawn')}
               </button>
               <button
                 className={`spawn-btn ${teamSpawn === 'RED_UP' ? 'active' : ''}`}
                 onClick={() => setTeamSpawn('RED_UP')}
                 title="We spawn at top-left"
               >
-                🔴 Red (Top)
+                {t('redSpawn')}
               </button>
             </div>
             <p className="spawn-info">
               {teamSpawn === 'BLUE_DOWN' 
-                ? '📍 Team A attacks from top-left | Team B defends bottom-right'
-                : '📍 Team A attacks from bottom-right | Team B defends top-left'}
+                ? t('blueSpawnInfo')
+                : t('redSpawnInfo')}
             </p>
           </div>
 
           {/* Team Selection */}
           <div className="team-controls">
-            <h3>Select Team to Mark</h3>
+            <h3>{t('selectTeam')}</h3>
             <div className="team-buttons">
               {Object.entries(TEAMS).map(([key, team]) => (
                 <button
@@ -340,12 +361,12 @@ function CanyonClashPlanner() {
                 </button>
               ))}
             </div>
-            <p className="current-time">Time: {currentTime}m | Click to mark</p>
+            <p className="current-time">{t('time')}: {currentTime}m | {t('clickToMark')}</p>
           </div>
 
           {/* Timeline Slider */}
           <div className="timeline-section">
-            <h3>⏱️ Battle Timeline</h3>
+            <h3>{t('battleTimeline')}</h3>
             <div className="slider-container">
               <input
                 type="range"
@@ -355,7 +376,7 @@ function CanyonClashPlanner() {
                 onChange={(e) => setCurrentTime(parseFloat(e.target.value))}
                 className="time-slider"
               />
-              <div className="time-display">{currentTime.toFixed(1)} / {maxTime} min</div>
+              <div className="time-display">{currentTime.toFixed(1)} / {maxTime} {t('min')}</div>
             </div>
 
             <div className="phases-timeline">
@@ -367,8 +388,8 @@ function CanyonClashPlanner() {
                 >
                   <div className="phase-dot"></div>
                   <div className="phase-tooltip">
-                    <strong>{phase.name}</strong>
-                    <p>{phase.description}</p>
+                    <strong>{t(phase.nameKey)}</strong>
+                    <p>{t(phase.timeKey)}</p>
                     <small>{phase.time}m</small>
                   </div>
                 </div>
@@ -378,10 +399,10 @@ function CanyonClashPlanner() {
 
           {/* Team Timings */}
           <div className="team-timings-section">
-            <h3>⏰ Team Attack Times</h3>
+            <h3>{t('teamAttackTimes')}</h3>
             {Object.entries(TEAMS).map(([key, team]) => (
               <div key={key} className="timing-card" style={{ borderLeftColor: team.color }}>
-                <label>{team.label}</label>
+                <label>{t(team.labelKey)}</label>
                 <div className="timing-input-group">
                   <input
                     type="number"
@@ -392,7 +413,7 @@ function CanyonClashPlanner() {
                     onChange={(e) => handleTeamTimingChange(key, e.target.value)}
                     className="timing-input"
                   />
-                  <span className="timing-unit">min</span>
+                  <span className="timing-unit">{t('min')}</span>
                 </div>
                 <input
                   type="range"
@@ -409,10 +430,10 @@ function CanyonClashPlanner() {
 
           {/* Markings List */}
           <div className="markings-section">
-            <h3>📍 Markings ({markings.length})</h3>
+            <h3>📍 {t('markings')} ({markings.length})</h3>
             <div className="markings-list">
               {markings.length === 0 ? (
-                <p className="empty-message">Click on map to add markings</p>
+                <p className="empty-message">{t('noMarkings')}</p>
               ) : (
                 markings.map((marking) => (
                   <div key={marking.id} className="marking-entry">
@@ -424,6 +445,7 @@ function CanyonClashPlanner() {
                     <button 
                       className="remove-btn"
                       onClick={() => setMarkings(markings.filter(m => m.id !== marking.id))}
+                      title={t('deletMarking')}
                     >
                       ✕
                     </button>
@@ -436,10 +458,10 @@ function CanyonClashPlanner() {
           {/* Action Buttons */}
           <div className="action-buttons">
             <button className="btn-export" onClick={handleExportPlan}>
-              📸 Export Plan
+              📸 {t('exportPlan')}
             </button>
             <button className="btn-clear" onClick={() => setMarkings([])}>
-              🗑️ Clear All
+              🗑️ {t('clearAll')}
             </button>
           </div>
         </div>

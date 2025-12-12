@@ -1,0 +1,57 @@
+{
+  "title": "🗻 Canyon Clash Strategic Planner",
+  "battleTips": "Battle Tips & Strategy",
+  "selectTeam": "Select Team to Mark",
+  "spawnPosition": "🏁 Our Spawn Position",
+  "blueSpawn": "🔵 Blue (Bottom)",
+  "redSpawn": "🔴 Red (Top)",
+  "blueSpawnInfo": "📍 Team A attacks from top-left | Team B defends bottom-right",
+  "redSpawnInfo": "📍 Team A attacks from bottom-right | Team B defends top-left",
+  "clickToMark": "Click to mark",
+  "time": "Time",
+  "min": "min",
+  "battleTimeline": "⏱️ Battle Timeline",
+  "teamAttackTimes": "⏰ Team Attack Times",
+  "markings": "📍 Markings",
+  "exportPlan": "Export Plan",
+  "clearAll": "Clear All",
+  "noMarkings": "No markings yet",
+  "deletMarking": "Delete marking",
+  "selectLanguage": "Language",
+  "tips": {
+    "tip1": "Heal troops in batches of 100 to avoid wasting healing speed-ups. All troops will be healed at end of match.",
+    "tip2": "Attacking HQs does not use fuel - use this strategically.",
+    "tip3": "Destroying an HQ prevents the enemy from deploying troops from that location.",
+    "tip4": "Rotate troops in buildings if they are low on health to maintain defensive positions.",
+    "tip5": "Free teleports available every 3 minutes with no cooldown - time them perfectly for objective captures.",
+    "tip6": "Use Energy Core spawn (20 min) as the focal point for final squad coordination and ultimate push."
+  },
+  "teams": {
+    "A": "Team A - Enemy Hospital",
+    "B": "Team B - Our Hospital",
+    "C": "Team C - Captain Side",
+    "D": "Team D - Military Centers"
+  },
+  "teamDescriptions": {
+    "A": "Frontline Strike",
+    "B": "Defensive Command",
+    "C": "Captain Squadron",
+    "D": "Resource Squad"
+  },
+  "battlePhases": {
+    "prepPhase": "Prep Phase",
+    "prepPhaseDesc": "Starters enter battlefield",
+    "phaseIStart": "Phase I Start",
+    "phaseIStartDesc": "Hospital & Water Refinery accessible",
+    "freeTeleport1": "Free Teleport 1",
+    "freeTeleport1Desc": "First free teleport available",
+    "freeTeleport2": "Free Teleport 2",
+    "freeTeleport2Desc": "Second free teleport available",
+    "energyCore": "Energy Core",
+    "energyCoreDesc": "Energy Core appears",
+    "freeTeleport3": "Free Teleport 3",
+    "freeTeleport3Desc": "Third free teleport available",
+    "battleEnd": "Battle End",
+    "battleEndDesc": "Battle concludes"
+  }
+}

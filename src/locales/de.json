@@ -1,0 +1,57 @@
+{
+  "title": "🗻 Canyon Clash Strategieplaner",
+  "battleTips": "Kampftipps und Strategie",
+  "selectTeam": "Wählen Sie das Team aus, das markiert werden soll",
+  "spawnPosition": "🏁 Unsere Spawnposition",
+  "blueSpawn": "🔵 Blau (Unten)",
+  "redSpawn": "🔴 Rot (Oben)",
+  "blueSpawnInfo": "📍 Team A greift von oben-links an | Team B verteidigt unten-rechts",
+  "redSpawnInfo": "📍 Team A greift von unten-rechts an | Team B verteidigt oben-links",
+  "clickToMark": "Klicken zum Markieren",
+  "time": "Zeit",
+  "min": "min",
+  "battleTimeline": "⏱️ Kampfzeitlinie",
+  "teamAttackTimes": "⏰ Team-Angriffszeiten",
+  "markings": "📍 Markierungen",
+  "exportPlan": "Plan exportieren",
+  "clearAll": "Alles löschen",
+  "noMarkings": "Keine Markierungen",
+  "deletMarking": "Markierung löschen",
+  "selectLanguage": "Sprache",
+  "tips": {
+    "tip1": "Heilen Sie Truppen in Chargen von 100, um Heilungsbeschleunigungen nicht zu verschwenden. Alle Truppen werden am Ende des Spiels geheilt.",
+    "tip2": "Der Angriff auf Hauptquartiere verbraucht keinen Kraftstoff - nutzen Sie dies strategisch.",
+    "tip3": "Die Zerstörung eines Hauptquartiers verhindert, dass der Feind Truppen von diesem Ort aus einsetzt.",
+    "tip4": "Drehen Sie Truppen in Gebäuden, wenn sie niedrig sind, um Verteidigungspositionen zu halten.",
+    "tip5": "Kostenlose Teleportation alle 3 Minuten ohne Cooldown - zeitlich perfekt für Objekterfassungen.",
+    "tip6": "Verwenden Sie den Energiekern-Spawn (20 Minuten) als Fokuspunkt für die endgültige Teamkoordination und den ultimativen Angriff."
+  },
+  "teams": {
+    "A": "Team A - Gegnerisches Krankenhaus",
+    "B": "Team B - Unser Krankenhaus",
+    "C": "Team C - Kapitän Seite",
+    "D": "Team D - Militärische Zentren"
+  },
+  "teamDescriptions": {
+    "A": "Frontalangriff",
+    "B": "Defensive Kommandozentrale",
+    "C": "Kapitän Geschwader",
+    "D": "Ressourcen Trupp"
+  },
+  "battlePhases": {
+    "prepPhase": "Vorbereitungsphase",
+    "prepPhaseDesc": "Startspieler betreten das Schlachtfeld",
+    "phaseIStart": "Phase I Start",
+    "phaseIStartDesc": "Krankenhaus und Wasserraffinerie zugänglich",
+    "freeTeleport1": "Kostenlose Teleportation 1",
+    "freeTeleport1Desc": "Erste kostenlose Teleportation verfügbar",
+    "freeTeleport2": "Kostenlose Teleportation 2",
+    "freeTeleport2Desc": "Zweite kostenlose Teleportation verfügbar",
+    "energyCore": "Energiekern",
+    "energyCoreDesc": "Energiekern erscheint",
+    "freeTeleport3": "Kostenlose Teleportation 3",
+    "freeTeleport3Desc": "Dritte kostenlose Teleportation verfügbar",
+    "battleEnd": "Kampfende",
+    "battleEndDesc": "Der Kampf endet"
+  }
+}
