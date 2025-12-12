@@ -288,8 +288,8 @@ function CanyonClashPlanner() {
               );
             })()}
 
-            {/* Render markings on map */}
-            {markings.map((marking) => (
+            {/* Render markings on map - filtered by current time */}
+            {markings.filter(marking => marking.time <= currentTime).map((marking) => (
               <div
                 key={marking.id}
                 className="marking"
@@ -430,27 +430,36 @@ function CanyonClashPlanner() {
 
           {/* Markings List */}
           <div className="markings-section">
-            <h3>📍 {t('markings')} ({markings.length})</h3>
+            <h3>📍 {t('markings')} ({markings.filter(m => m.time <= currentTime).length}/{markings.length})</h3>
             <div className="markings-list">
               {markings.length === 0 ? (
                 <p className="empty-message">{t('noMarkings')}</p>
               ) : (
-                markings.map((marking) => (
-                  <div key={marking.id} className="marking-entry">
-                    <span className="marking-team" style={{ backgroundColor: TEAMS[marking.team].color }}>
-                      {marking.team}
-                    </span>
-                    <span className="marking-coords">{Math.round(marking.x)}, {Math.round(marking.y)}</span>
-                    <span className="marking-time-label">{marking.time}m</span>
-                    <button 
-                      className="remove-btn"
-                      onClick={() => setMarkings(markings.filter(m => m.id !== marking.id))}
-                      title={t('deletMarking')}
+                markings.map((marking) => {
+                  const isActive = marking.time <= currentTime;
+                  return (
+                    <div 
+                      key={marking.id} 
+                      className={`marking-entry ${isActive ? 'active' : 'inactive'}`}
                     >
-                      ✕
-                    </button>
-                  </div>
-                ))
+                      <span className="marking-team" style={{ backgroundColor: TEAMS[marking.team].color }}>
+                        {marking.team}
+                      </span>
+                      <span className="marking-coords">{Math.round(marking.x)}, {Math.round(marking.y)}</span>
+                      <span className="marking-time-label">{marking.time}m</span>
+                      <span className={`marking-status ${isActive ? 'active-badge' : 'pending-badge'}`}>
+                        {isActive ? '✓' : '○'}
+                      </span>
+                      <button 
+                        className="remove-btn"
+                        onClick={() => setMarkings(markings.filter(m => m.id !== marking.id))}
+                        title={t('deletMarking')}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  );
+                })
               )}
             </div>
           </div>
