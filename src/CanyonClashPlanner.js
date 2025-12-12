@@ -51,6 +51,7 @@ function CanyonClashPlanner() {
   const [showTipsModal, setShowTipsModal] = useState(false);
   const [teamSpawn, setTeamSpawn] = useState('BLUE_DOWN'); // BLUE_DOWN or RED_UP
   const [isPlaying, setIsPlaying] = useState(false);
+  const [markerDuration, setMarkerDuration] = useState(10); // Duración del marcador en minutos
   const maxTime = 40;
   const [teamTimings, setTeamTimings] = useState({
     A: 0,
@@ -69,9 +70,9 @@ function CanyonClashPlanner() {
           setIsPlaying(false);
           return maxTime;
         }
-        return prevTime + 0.2;
+        return prevTime + 1;
       });
-    }, 100);
+    }, 500);
 
     return () => clearInterval(interval);
   }, [isPlaying, maxTime]);
@@ -87,7 +88,8 @@ function CanyonClashPlanner() {
       x,
       y,
       team: selectedTeam,
-      time: currentTime
+      time: currentTime,
+      duration: markerDuration
     };
 
     setMarkings([...markings, newMarking]);
@@ -307,7 +309,10 @@ function CanyonClashPlanner() {
             })()}
 
             {/* Render markings on map - filtered by exact current time */}
-            {markings.filter(marking => Math.abs(marking.time - currentTime) < 0.3).map((marking) => (
+            {markings.filter(marking => {
+              const isActive = currentTime >= marking.time && currentTime < marking.time + marking.duration;
+              return isActive;
+            }).map((marking) => (
               <div
                 key={marking.id}
                 className="marking"
@@ -406,14 +411,15 @@ function CanyonClashPlanner() {
                 type="range"
                 min="0"
                 max={maxTime}
+                step="1"
                 value={currentTime}
                 onChange={(e) => {
-                  setCurrentTime(parseFloat(e.target.value));
+                  setCurrentTime(parseInt(e.target.value));
                   if (isPlaying) setIsPlaying(false);
                 }}
                 className="time-slider"
               />
-              <div className="time-display">{currentTime.toFixed(1)} / {maxTime} {t('min')}</div>
+              <div className="time-display">{currentTime} / {maxTime} {t('min')}</div>
             </div>
 
             <div className="phases-timeline">
@@ -434,6 +440,24 @@ function CanyonClashPlanner() {
             </div>
           </div>
 
+          {/* Marker Duration Control */}
+          <div className="duration-control">
+            <h3>⏱️ Marker Duration</h3>
+            <div className="duration-input-group">
+              <input
+                type="number"
+                min="1"
+                max={maxTime}
+                step="1"
+                value={markerDuration}
+                onChange={(e) => setMarkerDuration(Math.max(1, parseInt(e.target.value) || 1))}
+                className="duration-input"
+              />
+              <span className="duration-unit">min</span>
+            </div>
+            <p className="duration-info">Markers will stay for {markerDuration} minute{markerDuration !== 1 ? 's' : ''}</p>
+          </div>
+
           {/* Team Timings */}
           <div className="team-timings-section">
             <h3>{t('teamAttackTimes')}</h3>
@@ -445,7 +469,7 @@ function CanyonClashPlanner() {
                     type="number"
                     min="0"
                     max={maxTime}
-                    step="0.5"
+                    step="1"
                     value={teamTimings[key]}
                     onChange={(e) => handleTeamTimingChange(key, e.target.value)}
                     className="timing-input"
@@ -456,7 +480,7 @@ function CanyonClashPlanner() {
                   type="range"
                   min="0"
                   max={maxTime}
-                  step="0.5"
+                  step="1"
                   value={teamTimings[key]}
                   onChange={(e) => handleTeamTimingChange(key, e.target.value)}
                   className="timing-slider"
@@ -467,13 +491,13 @@ function CanyonClashPlanner() {
 
           {/* Markings List */}
           <div className="markings-section">
-            <h3>📍 {t('markings')} ({markings.filter(m => Math.abs(m.time - currentTime) < 0.3).length}/{markings.length})</h3>
+            <h3>📍 {t('markings')} ({markings.filter(m => currentTime >= m.time && currentTime < m.time + m.duration).length}/{markings.length})</h3>
             <div className="markings-list">
               {markings.length === 0 ? (
                 <p className="empty-message">{t('noMarkings')}</p>
               ) : (
                 markings.map((marking) => {
-                  const isActive = Math.abs(marking.time - currentTime) < 0.3;
+                  const isActive = currentTime >= marking.time && currentTime < marking.time + marking.duration;
                   return (
                     <div 
                       key={marking.id} 
@@ -483,7 +507,11 @@ function CanyonClashPlanner() {
                         {marking.team}
                       </span>
                       <span className="marking-coords">{Math.round(marking.x)}, {Math.round(marking.y)}</span>
-                      <span className="marking-time-label">{marking.time}m</span>
+                      <div className="marking-time-info">
+                        <span className="marking-time-label">{marking.time}m</span>
+                        <span className="marking-duration-sep">→</span>
+                        <span className="marking-time-label">{marking.time + marking.duration}m</span>
+                      </div>
                       <span className={`marking-status ${isActive ? 'active-badge' : 'pending-badge'}`}>
                         {isActive ? '✓' : '○'}
                       </span>
