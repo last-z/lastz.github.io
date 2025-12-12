@@ -18,11 +18,21 @@ const BATTLE_PHASES = [
   { name: 'Battle End', time: 40, description: 'Battle concludes' }
 ];
 
+const TIPS = [
+  'Heal troops in batches of 100 to avoid wasting healing speed-ups. All troops will be healed at end of match.',
+  'Attacking HQs does not use fuel - use this strategically.',
+  'Destroying an HQ prevents the enemy from deploying troops from that location.',
+  'Rotate troops in buildings if they are low on health to maintain defensive positions.',
+  'Free teleports available every 3 minutes with no cooldown - time them perfectly for objective captures.',
+  'Use Energy Core spawn (20 min) as the focal point for final squad coordination and ultimate push.'
+];
+
 function CanyonClashPlanner() {
   const containerRef = useRef(null);
   const [selectedTeam, setSelectedTeam] = useState('A');
   const [markings, setMarkings] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
+  const [showTipsModal, setShowTipsModal] = useState(false);
   const maxTime = 40;
   const [teamTimings, setTeamTimings] = useState({
     A: 0,
@@ -109,7 +119,35 @@ function CanyonClashPlanner() {
 
   return (
     <div className="canyon-clash-planner">
-      <h1>🗻 Canyon Clash Strategic Planner</h1>
+      <div className="header-container">
+        <h1>🗻 Canyon Clash Strategic Planner</h1>
+        <button 
+          className="info-btn"
+          onClick={() => setShowTipsModal(!showTipsModal)}
+          title="Battle Tips"
+        >
+          ℹ
+        </button>
+      </div>
+
+      {showTipsModal && (
+        <div className="tips-modal">
+          <div className="tips-content">
+            <h2>Battle Tips & Strategy</h2>
+            <button 
+              className="modal-close"
+              onClick={() => setShowTipsModal(false)}
+            >
+              ✕
+            </button>
+            <ul className="tips-list">
+              {TIPS.map((tip, idx) => (
+                <li key={idx}>{tip}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
 
       <div className="planner-container">
         {/* Left Panel */}
