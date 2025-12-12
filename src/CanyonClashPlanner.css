@@ -731,9 +731,20 @@
     padding: 10px;
   }
 
+  .header-container {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
   .canyon-clash-planner h1 {
-    font-size: 20px;
+    font-size: 22px;
     margin-bottom: 10px;
+  }
+
+  .info-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
   }
 
   .planner-container {
@@ -742,6 +753,7 @@
 
   .team-buttons {
     grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
 
   .phases-timeline {
@@ -751,5 +763,118 @@
   .phase-tooltip {
     margin-top: 20px;
     font-size: 10px;
+  }
+
+  .right-panel {
+    padding: 12px;
+    gap: 15px;
+  }
+
+  .team-controls {
+    padding: 12px;
+  }
+
+  .timing-card {
+    padding: 10px;
+  }
+
+  .marking-entry {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .btn-export,
+  .btn-clear {
+    padding: 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .canyon-clash-planner {
+    padding: 8px;
+  }
+
+  .canyon-clash-planner h1 {
+    font-size: 18px;
+  }
+
+  .planner-container {
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 8px;
+  }
+
+  .right-panel {
+    height: 300px;
+    padding: 10px;
+    gap: 12px;
+  }
+
+  .team-buttons {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .team-btn {
+    padding: 8px 10px;
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .timeline-section h3,
+  .team-timings-section h3,
+  .markings-section h3 {
+    font-size: 12px;
+  }
+
+  .phases-timeline {
+    height: 50px;
+    padding: 6px 2px;
+  }
+
+  .phase-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .timing-card {
+    padding: 8px;
+  }
+
+  .timing-card label {
+    font-size: 11px;
+  }
+
+  .marking-entry {
+    padding: 6px;
+    gap: 6px;
+    font-size: 10px;
+  }
+
+  .btn-export,
+  .btn-clear {
+    padding: 10px;
+    font-size: 11px;
+  }
+
+  .tips-content {
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 90vw;
+  }
+
+  .tips-content h2 {
+    font-size: 20px;
+  }
+
+  .tips-list li {
+    padding: 10px 0;
+    font-size: 13px;
   }
 }
