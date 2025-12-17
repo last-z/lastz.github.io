@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import './CanyonClashPlanner.css';
+import './PlannerPage.css';
 
 const TEAMS = {
   A: { labelKey: 'teams.A', color: '#FF6B6B', descKey: 'teamDescriptions.A' },
@@ -42,13 +42,15 @@ const SPAWN_AREAS = {
   }
 };
 
-function CanyonClashPlanner() {
+function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) {
   const { t, i18n } = useTranslation();
   const containerRef = useRef(null);
   const [selectedTeam, setSelectedTeam] = useState('A');
   const [markings, setMarkings] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
   const [showTipsModal, setShowTipsModal] = useState(false);
+  const [showSavePlanModal, setShowSavePlanModal] = useState(false);
+  const [savePlanForm, setSavePlanForm] = useState({ name: '', description: '' });
   const [teamSpawn, setTeamSpawn] = useState('BLUE_DOWN'); // BLUE_DOWN or RED_UP
   const [isPlaying, setIsPlaying] = useState(false);
   const [markerDuration, setMarkerDuration] = useState(10); // Duración del marcador en minutos
@@ -60,8 +62,26 @@ function CanyonClashPlanner() {
     D: 4
   });
 
+  // Load pending plan if one is passed
+  useEffect(() => {
+    if (pendingPlan) {
+      if (pendingPlan.teamTimings) {
+        setTeamTimings(pendingPlan.teamTimings);
+      }
+      if (pendingPlan.teamSpawn) {
+        setTeamSpawn(pendingPlan.teamSpawn);
+      }
+      if (pendingPlan.markings && Array.isArray(pendingPlan.markings)) {
+        setMarkings(pendingPlan.markings);
+      }
+      setCurrentTime(0);
+      setIsPlaying(true);
+      onPlanLoaded && onPlanLoaded();
+    }
+  }, [pendingPlan, onPlanLoaded]);
+
   // Auto-advance time when playing
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isPlaying) return;
 
     const interval = setInterval(() => {
@@ -147,7 +167,7 @@ function CanyonClashPlanner() {
     // Try to draw the SVG background
     const bgImage = new Image();
     bgImage.crossOrigin = 'anonymous';
-    bgImage.src = 'background.svg';
+    bgImage.src = './background.svg';
     bgImage.onload = () => {
       ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
       drawMarkingsAndExport(ctx, canvas);
@@ -216,11 +236,74 @@ function CanyonClashPlanner() {
     link.click();
   };
 
+  const handleSavePlanClick = () => {
+    setSavePlanForm({ name: '', description: '' });
+    setShowSavePlanModal(true);
+  };
+
+  const handleSavePlanSubmit = () => {
+    if (!savePlanForm.name.trim()) {
+      alert(t('admin.planNameRequired') || 'Plan name is required');
+      return;
+    }
+
+    // Create the plan object with current state
+    const newPlan = {
+      id: Date.now(),
+      name: savePlanForm.name.trim(),
+      description: savePlanForm.description.trim(),
+      teamTimings: { ...teamTimings },
+      teamSpawn,
+      markings: [...markings],
+      createdAt: new Date().toISOString()
+    };
+
+    // Get existing plans from localStorage
+    const savedPlans = localStorage.getItem('ROLsPlans');
+    let plans = [];
+    try {
+      plans = savedPlans ? JSON.parse(savedPlans) : [];
+    } catch (error) {
+      console.error('Error parsing existing plans:', error);
+      plans = [];
+    }
+
+    // Add new plan
+    plans.push(newPlan);
+    localStorage.setItem('ROLsPlans', JSON.stringify(plans));
+
+    // Show success message
+    alert(`✓ ${t('admin.planSaved') || 'Plan saved!'} "${newPlan.name}"`);
+    setShowSavePlanModal(false);
+    setSavePlanForm({ name: '', description: '' });
+  };
+
   return (
     <div className="canyon-clash-planner">
       <div className="header-container">
         <h1>{t('title')}</h1>
         <div className="header-controls">
+          <button 
+            className="save-plan-btn"
+            onClick={handleSavePlanClick}
+            title="Save current strategy as ROLs Plan"
+          >
+            💾 {t('admin.savePlanToROLs') || 'Save as ROLs'}
+          </button>
+          <button 
+            className="admin-btn"
+            onClick={onAdminClick}
+            title="ROLs Plans Administration"
+          >
+            ⚙️ {t('admin.rolsPlans') || 'Admin'}
+          </button>
+          <button 
+            className="about-btn"
+            onClick={onAboutClick}
+            title="About Canyon Clash"
+          >
+            ℹ️ {t('about.title') || 'About'}
+          </button>
           <select 
             value={i18n.language} 
             onChange={(e) => {
@@ -267,12 +350,76 @@ function CanyonClashPlanner() {
         </div>
       )}
 
+      {/* Save Plan Modal */}
+      {showSavePlanModal && (
+        <div className="save-plan-modal-overlay" onClick={() => setShowSavePlanModal(false)}>
+          <div className="save-plan-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="save-plan-modal-header">
+              <h2>Save Strategy as ROLs Plan</h2>
+              <button 
+                className="modal-close"
+                onClick={() => setShowSavePlanModal(false)}
+              >
+                ✕
+              </button>
+            </div>
+            <div className="save-plan-modal-content">
+              <div className="save-plan-form-group">
+                <label>Plan Name *</label>
+                <input
+                  type="text"
+                  placeholder="e.g., Aggressive Rush Strategy"
+                  value={savePlanForm.name}
+                  onChange={(e) => setSavePlanForm({ ...savePlanForm, name: e.target.value })}
+                  className="save-plan-input"
+                />
+              </div>
+              <div className="save-plan-form-group">
+                <label>Description</label>
+                <textarea
+                  placeholder="Add notes about this strategy..."
+                  value={savePlanForm.description}
+                  onChange={(e) => setSavePlanForm({ ...savePlanForm, description: e.target.value })}
+                  className="save-plan-textarea"
+                  rows="3"
+                />
+              </div>
+              <div className="save-plan-info">
+                <p><strong>Current Strategy:</strong></p>
+                <ul>
+                  <li>Team Spawn: {teamSpawn === 'BLUE_DOWN' ? '🔵 Blue (Bottom-Right)' : '🔴 Red (Top-Left)'}</li>
+                  <li>Markers: {markings.length}</li>
+                  <li>Team A Attack: {teamTimings.A}m</li>
+                  <li>Team B Attack: {teamTimings.B}m</li>
+                  <li>Team C Attack: {teamTimings.C}m</li>
+                  <li>Team D Attack: {teamTimings.D}m</li>
+                </ul>
+              </div>
+              <div className="save-plan-actions">
+                <button 
+                  className="btn-save-plan"
+                  onClick={handleSavePlanSubmit}
+                >
+                  💾 Save as ROLs Plan
+                </button>
+                <button 
+                  className="btn-cancel-save"
+                  onClick={() => setShowSavePlanModal(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="planner-container">
         {/* Left Panel */}
         <div className="left-panel">
           <div className="map-container" ref={containerRef} onClick={handleMapClick}>
             <img 
-              src="background.svg" 
+              src="/background.svg" 
               alt="Canyon Clash Map"
               className="map-background"
             />
@@ -544,4 +691,4 @@ function CanyonClashPlanner() {
   );
 }
 
-export default CanyonClashPlanner;
+export default PlannerPage;

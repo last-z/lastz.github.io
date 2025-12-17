@@ -53,5 +53,40 @@
     "freeTeleport3Desc": "Tercera teletransportación gratuita disponible",
     "battleEnd": "Fin de la Batalla",
     "battleEndDesc": "La batalla termina"
-  }
+  },
+  "admin": {
+    "rolsPlans": "Planes ROLS",
+    "panelTitle": "Administración de Planes ROLS",
+    "createNewPlan": "Crear Nuevo Plan",
+    "editPlan": "Editar Plan",
+    "planName": "Nombre del Plan",
+    "planNamePlaceholder": "p.ej., Estrategia de Ataque A",
+    "planNameRequired": "El nombre del plan es obligatorio",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Detalles del plan, tácticas, notas...",
+    "teamSpawn": "Punto de Aparición del Equipo",
+    "teamTimings": "Tiempos de Ataque del Equipo",
+    "savePlan": "Guardar Plan",
+    "updatePlan": "Actualizar Plan",
+    "cancel": "Cancelar",
+    "savedPlans": "Planes Guardados",
+    "noPlansSaved": "Sin planes guardados",
+    "export": "Exportar",
+    "exportTooltip": "Exportar planes como archivo JSON",
+    "import": "Importar",
+    "importTooltip": "Importar planes desde archivo JSON",
+    "importSuccess": "¡Planes importados exitosamente!",
+    "importError": "Error al importar planes",
+    "play": "Reproducir",
+    "playPlanTooltip": "Cargar y reproducir este plan",
+    "edit": "Editar",
+    "editTooltip": "Editar este plan",
+    "delete": "Eliminar",
+    "deleteTooltip": "Eliminar este plan",
+    "confirmDelete": "¿Estás seguro de que deseas eliminar este plan?"
+  },
+  "about": {
+    "title": "Acerca de Canyon Clash"
+  },
+  "back": "Atrás"
 }

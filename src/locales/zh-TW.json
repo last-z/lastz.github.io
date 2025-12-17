@@ -53,5 +53,40 @@
     "freeTeleport3Desc": "第三次免費傳送可用",
     "battleEnd": "戰鬥結束",
     "battleEndDesc": "戰鬥結束"
-  }
+  },
+  "admin": {
+    "rolsPlans": "ROLS計劃",
+    "panelTitle": "ROLS計劃管理",
+    "createNewPlan": "建立新計劃",
+    "editPlan": "編輯計劃",
+    "planName": "計劃名稱",
+    "planNamePlaceholder": "例如，進攻策略A",
+    "planNameRequired": "計劃名稱為必填項",
+    "description": "描述",
+    "descriptionPlaceholder": "計劃詳情、戰術、備註...",
+    "teamSpawn": "隊伍出生點",
+    "teamTimings": "隊伍進攻時間",
+    "savePlan": "保存計劃",
+    "updatePlan": "更新計劃",
+    "cancel": "取消",
+    "savedPlans": "已保存的計劃",
+    "noPlansSaved": "暫無已保存的計劃",
+    "export": "匯出",
+    "exportTooltip": "將計劃匯出為JSON文件",
+    "import": "匯入",
+    "importTooltip": "從JSON文件匯入計劃",
+    "importSuccess": "計劃匯入成功！",
+    "importError": "匯入計劃出錯",
+    "play": "播放",
+    "playPlanTooltip": "加載並播放此計劃",
+    "edit": "編輯",
+    "editTooltip": "編輯此計劃",
+    "delete": "刪除",
+    "deleteTooltip": "刪除此計劃",
+    "confirmDelete": "確定要刪除此計劃嗎？"
+  },
+  "about": {
+    "title": "關於峽谷衝突"
+  },
+  "back": "返回"
 }

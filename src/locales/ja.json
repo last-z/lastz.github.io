@@ -53,5 +53,40 @@
     "freeTeleport3Desc": "3番目の無料テレポート利用可能",
     "battleEnd": "戦闘終了",
     "battleEndDesc": "戦闘が終了"
-  }
+  },
+  "admin": {
+    "rolsPlans": "ROLS計画",
+    "panelTitle": "ROLS計画管理",
+    "createNewPlan": "新しい計画を作成",
+    "editPlan": "計画を編集",
+    "planName": "計画名",
+    "planNamePlaceholder": "例：攻撃戦略A",
+    "planNameRequired": "計画名は必須です",
+    "description": "説明",
+    "descriptionPlaceholder": "計画の詳細、戦術、メモ...",
+    "teamSpawn": "チームスポーン位置",
+    "teamTimings": "チーム攻撃時間",
+    "savePlan": "計画を保存",
+    "updatePlan": "計画を更新",
+    "cancel": "キャンセル",
+    "savedPlans": "保存済み計画",
+    "noPlansSaved": "保存済み計画なし",
+    "export": "エクスポート",
+    "exportTooltip": "計画をJSONファイルとしてエクスポート",
+    "import": "インポート",
+    "importTooltip": "JSONファイルから計画をインポート",
+    "importSuccess": "計画が正常にインポートされました！",
+    "importError": "計画のインポート中にエラーが発生しました",
+    "play": "再生",
+    "playPlanTooltip": "この計画をロードして再生",
+    "edit": "編集",
+    "editTooltip": "この計画を編集",
+    "delete": "削除",
+    "deleteTooltip": "この計画を削除",
+    "confirmDelete": "この計画を削除してもよろしいですか？"
+  },
+  "about": {
+    "title": "キャニオンクラッシュについて"
+  },
+  "back": "戻る"
 }

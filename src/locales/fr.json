@@ -53,5 +53,40 @@
     "freeTeleport3Desc": "Troisième téléportation gratuite disponible",
     "battleEnd": "Fin de la Bataille",
     "battleEndDesc": "La bataille se termine"
-  }
+  },
+  "admin": {
+    "rolsPlans": "Plans ROLS",
+    "panelTitle": "Administration des Plans ROLS",
+    "createNewPlan": "Créer un Nouveau Plan",
+    "editPlan": "Éditer le Plan",
+    "planName": "Nom du Plan",
+    "planNamePlaceholder": "p.ex., Stratégie d'Attaque A",
+    "planNameRequired": "Le nom du plan est obligatoire",
+    "description": "Description",
+    "descriptionPlaceholder": "Détails du plan, tactiques, notes...",
+    "teamSpawn": "Point d'Apparition de l'Équipe",
+    "teamTimings": "Temps d'Attaque de l'Équipe",
+    "savePlan": "Enregistrer le Plan",
+    "updatePlan": "Mettre à Jour le Plan",
+    "cancel": "Annuler",
+    "savedPlans": "Plans Enregistrés",
+    "noPlansSaved": "Aucun plan enregistré",
+    "export": "Exporter",
+    "exportTooltip": "Exporter les plans en fichier JSON",
+    "import": "Importer",
+    "importTooltip": "Importer les plans depuis un fichier JSON",
+    "importSuccess": "Plans importés avec succès!",
+    "importError": "Erreur lors de l'importation des plans",
+    "play": "Lire",
+    "playPlanTooltip": "Charger et lire ce plan",
+    "edit": "Éditer",
+    "editTooltip": "Éditer ce plan",
+    "delete": "Supprimer",
+    "deleteTooltip": "Supprimer ce plan",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce plan?"
+  },
+  "about": {
+    "title": "À propos de Canyon Clash"
+  },
+  "back": "Retour"
 }

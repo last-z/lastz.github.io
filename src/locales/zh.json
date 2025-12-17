@@ -53,5 +53,40 @@
     "freeTeleport3Desc": "第三次免费传送可用",
     "battleEnd": "战斗结束",
     "battleEndDesc": "战斗结束"
-  }
+  },
+  "admin": {
+    "rolsPlans": "ROLS计划",
+    "panelTitle": "ROLS计划管理",
+    "createNewPlan": "创建新计划",
+    "editPlan": "编辑计划",
+    "planName": "计划名称",
+    "planNamePlaceholder": "例如，进攻策略A",
+    "planNameRequired": "计划名称为必填项",
+    "description": "描述",
+    "descriptionPlaceholder": "计划详情、战术、备注...",
+    "teamSpawn": "队伍出生点",
+    "teamTimings": "队伍进攻时间",
+    "savePlan": "保存计划",
+    "updatePlan": "更新计划",
+    "cancel": "取消",
+    "savedPlans": "已保存的计划",
+    "noPlansSaved": "暂无已保存的计划",
+    "export": "导出",
+    "exportTooltip": "将计划导出为JSON文件",
+    "import": "导入",
+    "importTooltip": "从JSON文件导入计划",
+    "importSuccess": "计划导入成功！",
+    "importError": "导入计划出错",
+    "play": "播放",
+    "playPlanTooltip": "加载并播放此计划",
+    "edit": "编辑",
+    "editTooltip": "编辑此计划",
+    "delete": "删除",
+    "deleteTooltip": "删除此计划",
+    "confirmDelete": "确定要删除此计划吗？"
+  },
+  "about": {
+    "title": "关于峡谷冲突"
+  },
+  "back": "返回"
 }

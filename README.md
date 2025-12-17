@@ -2,7 +2,7 @@
 
 Una herramienta web interactiva para planificar y coordinar estrategias de batalla en el juego competitivo **Canyon Clash**.
 
-## Características
+## Características Principales
 
 ### 🗺️ Explorador de Mapa
 - **Mapa SVG interactivo** - Visualiza el mapa completo de Canyon Clash
@@ -11,34 +11,68 @@ Una herramienta web interactiva para planificar y coordinar estrategias de batal
 - **Coordenadas en tiempo real** - Ve las coordenadas exactas mientras navegas
 
 ### ⏱️ Línea de Tiempo de Batalla
-- **Slider de 0-20 minutos** - Controla la progresión de la batalla
-- **Marcadores de fases** - Visualiza eventos importantes:
-  - **0m** - Fase de Preparación (Starters entran)
-  - **1m** - Phase I comienza (Hospitales y Refinerías accesibles)
-  - **3m, 6m, 9m** - Teletransportes gratuitos disponibles
-  - **10m** - Núcleo de Energía aparece
-  - **20m** - Batalla termina
+- **Slider de 0-40 minutos** - Controla la progresión de la batalla
+- **Marcadores de fases** - Visualiza eventos importantes de la batalla
 
 ### 👥 Coordinación de Equipos
-- **4 Equipos de color** - A (Rojo), B (Cian), C (Amarillo), D (Verde)
-  - **Team A** - Hospital del Enemigo
-  - **Team B** - Nuestro Hospital
-  - **Team C** - Lado del Capitán
-  - **Team D** - Centros Militares
-
+- **4 Equipos codificados por color** - A, B, C, D
 - **Sliders de tiempo de ataque** - Configura cuándo cada equipo ataca
-- **Tiempos por defecto**:
-  - Teams A & B: 0 minutos (inicio inmediato)
-  - Teams C & D: 2 minutos (ataque retrasado)
+- **Soporte para diferentes posiciones de spawn** - Blue Down o Red Up
 
 ### 📍 Marcadores Estratégicos
 - **Haz clic en el mapa** - Marca posiciones de equipo con coordenadas y tiempo
 - **Lista de marcadores** - Ve todos tus marcadores con opción de eliminar
-- **Timestamps automáticos** - Cada marcador registra el tiempo de la línea de tiempo
+- **Timestamps automáticos** - Cada marcador registra el tiempo actual
 
-### 💾 Exportar Estrategia
-- **Exporta como PNG** - Descarga tu plan estratégico como imagen
-- **Incluye todo** - Mapa, viewport, marcadores de equipo y timeline
+### 🎯 Planes ROLS (Admin Panel)
+- **Crear planes preconfigurados** - Guarda tus estrategias favoritas
+- **Biblioteca de estrategias** - Gestiona múltiples configuraciones
+- **Reproductor de planes** - Carga cualquier plan con un clic
+- **Importar/Exportar** - Comparte planes con tu equipo como archivos JSON
+- **Almacenamiento local** - Tus planes se guardan automáticamente en el navegador
+
+## Estructura del Proyecto
+
+```
+src/
+├── pages/
+│   ├── PlannerPage.js          # Main planner interface
+│   └── PlannerPage.css         # Planner styling
+├── components/
+│   └── ROLSPlans/
+│       ├── ROLSPlans.js        # Admin panel for strategies
+│       └── ROLSPlans.css       # Admin panel styling
+├── locales/                     # i18n translations (8 languages)
+├── utils/
+│   └── githubIntegration.js    # Optional GitHub integration helpers
+├── routes.js                    # Route configuration
+├── App.js                       # Root component
+├── i18n.js                      # i18n configuration
+└── index.js                     # Entry point
+```
+
+## Idiomas Soportados
+
+- 🇺🇸 English
+- 🇪🇸 Español
+- 🇫🇷 Français
+- 🇩🇪 Deutsch
+- 🇯🇵 日本語
+- 🇰🇷 한국어
+- 🇨🇳 简体中文
+- 🇹🇼 繁體中文
+
+## Comenzar
+
+### Requisitos Previos
+- Node.js 14+
+- npm o yarn
+- Guarda nombres y descripciones de planes
+- Configura posiciones de spawn (Azul/Rojo)
+- Define tiempos de ataque para cada equipo
+- Exporta planes completos como respaldo
+- Importa planes compartidos por compañeros
+- Sin límite de planes
 
 ## Instalación y Uso
 
@@ -75,6 +109,14 @@ npm run build
 3. Haz clic en el mapa para marcar la posición del equipo
 4. Ajusta tiempos de ataque en el panel derecho
 5. Exporta como PNG para compartir
+
+### Usar Planes ROLS
+1. **Crear un plan**: Click en "⚙️ ROLS Plans" → Rellena los detalles → "Guardar Plan"
+2. **Usar un plan**: "⚙️ ROLS Plans" → Click "▶ Play" en el plan → ¡Se carga automáticamente!
+3. **Compartir planes**: Click "📥 Exportar" → Envía el .json a tu equipo
+4. **Importar planes**: Click "📤 Importar" → Selecciona el .json → Listo!
+
+Para detalles completos, ver [QUICK_START.md](QUICK_START.md) y [ROLS_PLANS_GUIDE.md](ROLS_PLANS_GUIDE.md)
 
 ## Estructura del Proyecto
 

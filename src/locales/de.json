@@ -53,5 +53,40 @@
     "freeTeleport3Desc": "Dritte kostenlose Teleportation verfügbar",
     "battleEnd": "Kampfende",
     "battleEndDesc": "Der Kampf endet"
-  }
+  },
+  "admin": {
+    "rolsPlans": "ROLS-Pläne",
+    "panelTitle": "ROLS-Pläne Verwaltung",
+    "createNewPlan": "Neuen Plan erstellen",
+    "editPlan": "Plan bearbeiten",
+    "planName": "Planname",
+    "planNamePlaceholder": "z.B. Angriffsstruktur A",
+    "planNameRequired": "Planname ist erforderlich",
+    "description": "Beschreibung",
+    "descriptionPlaceholder": "Plandetails, Taktiken, Notizen...",
+    "teamSpawn": "Team-Spawnposition",
+    "teamTimings": "Team-Angriffszeiten",
+    "savePlan": "Plan speichern",
+    "updatePlan": "Plan aktualisieren",
+    "cancel": "Abbrechen",
+    "savedPlans": "Gespeicherte Pläne",
+    "noPlansSaved": "Keine Pläne gespeichert",
+    "export": "Exportieren",
+    "exportTooltip": "Pläne als JSON-Datei exportieren",
+    "import": "Importieren",
+    "importTooltip": "Pläne aus JSON-Datei importieren",
+    "importSuccess": "Pläne erfolgreich importiert!",
+    "importError": "Fehler beim Importieren von Plänen",
+    "play": "Abspielen",
+    "playPlanTooltip": "Diesen Plan laden und abspielen",
+    "edit": "Bearbeiten",
+    "editTooltip": "Diesen Plan bearbeiten",
+    "delete": "Löschen",
+    "deleteTooltip": "Diesen Plan löschen",
+    "confirmDelete": "Möchten Sie diesen Plan wirklich löschen?"
+  },
+  "about": {
+    "title": "Über Canyon Clash"
+  },
+  "back": "Zurück"
 }
