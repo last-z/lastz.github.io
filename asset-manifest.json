@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/lastz.github.io/static/css/main.4c5985be.css",
-    "main.js": "/lastz.github.io/static/js/main.b5ce1025.js",
+    "main.css": "/lastz.github.io/static/css/main.ec6761ec.css",
+    "main.js": "/lastz.github.io/static/js/main.dbad8e7c.js",
     "static/js/453.dd0e6cf8.chunk.js": "/lastz.github.io/static/js/453.dd0e6cf8.chunk.js",
     "index.html": "/lastz.github.io/index.html",
-    "main.4c5985be.css.map": "/lastz.github.io/static/css/main.4c5985be.css.map",
-    "main.b5ce1025.js.map": "/lastz.github.io/static/js/main.b5ce1025.js.map",
+    "main.ec6761ec.css.map": "/lastz.github.io/static/css/main.ec6761ec.css.map",
+    "main.dbad8e7c.js.map": "/lastz.github.io/static/js/main.dbad8e7c.js.map",
     "453.dd0e6cf8.chunk.js.map": "/lastz.github.io/static/js/453.dd0e6cf8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4c5985be.css",
-    "static/js/main.b5ce1025.js"
+    "static/css/main.ec6761ec.css",
+    "static/js/main.dbad8e7c.js"
   ]
 }
