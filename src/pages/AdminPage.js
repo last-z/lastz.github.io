@@ -5,6 +5,8 @@ import './AdminPage.css';
 const AdminPage = ({ onNavigateToPlan }) => {
   const { t, i18n } = useTranslation();
   const [plans, setPlans] = useState([]);
+  const [selectedPlansForMerge, setSelectedPlansForMerge] = useState(new Set());
+  const [mergedPlanName, setMergedPlanName] = useState('');
   const [editingPlan, setEditingPlan] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -31,55 +33,6 @@ const AdminPage = ({ onNavigateToPlan }) => {
     localStorage.setItem('ROLsPlans', JSON.stringify(plans));
   }, [plans]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleTeamTimingChange = (team, value) => {
-    setFormData(prev => ({
-      ...prev,
-      teamTimings: {
-        ...prev.teamTimings,
-        [team]: parseFloat(value) || 0
-      }
-    }));
-  };
-
-  const handleSavePlan = () => {
-    if (!formData.name.trim()) {
-      alert(t('admin.planNameRequired') || 'Plan name is required');
-      return;
-    }
-
-    if (editingPlan) {
-      // Update existing plan
-      setPlans(plans.map(p => 
-        p.id === editingPlan.id ? { ...formData, id: editingPlan.id } : p
-      ));
-      setEditingPlan(null);
-    } else {
-      // Create new plan
-      const newPlan = {
-        ...formData,
-        id: Date.now(),
-        createdAt: new Date().toISOString()
-      };
-      setPlans([...plans, newPlan]);
-    }
-
-    resetForm();
-  };
-
-  const handleEditPlan = (plan) => {
-    setFormData(plan);
-    setEditingPlan(plan);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const handleDeletePlan = (id) => {
     if (window.confirm(t('admin.confirmDelete') || 'Are you sure?')) {
       setPlans(plans.filter(p => p.id !== id));
@@ -88,6 +41,12 @@ const AdminPage = ({ onNavigateToPlan }) => {
         setEditingPlan(null);
       }
     }
+  };
+
+  const handleEditPlan = (plan) => {
+    setFormData(plan);
+    setEditingPlan(plan);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleLoadPlan = (plan) => {
@@ -116,17 +75,85 @@ const AdminPage = ({ onNavigateToPlan }) => {
     const reader = new FileReader();
     reader.onload = (event) => {
       try {
-        const importedPlans = JSON.parse(event.target.result);
-        if (Array.isArray(importedPlans)) {
-          setPlans([...plans, ...importedPlans]);
-          alert(t('admin.importSuccess') || 'Plans imported successfully!');
+        const importedData = JSON.parse(event.target.result);
+        
+        // Handle both single plan (object) and multiple plans (array)
+        let plansToImport = [];
+        
+        if (Array.isArray(importedData)) {
+          // If it's an array, use it directly
+          plansToImport = importedData;
+        } else if (importedData && typeof importedData === 'object' && importedData.name) {
+          // If it's a single plan object with a name property, wrap it in an array
+          plansToImport = [importedData];
+        } else {
+          throw new Error('Invalid plan format');
+        }
+        
+        if (plansToImport.length > 0) {
+          setPlans([...plans, ...plansToImport]);
+          alert(t('admin.importSuccess') || `Successfully imported ${plansToImport.length} plan(s)!`);
+        } else {
+          alert(t('admin.importError') || 'No valid plans found in file');
         }
       } catch (error) {
-        alert(t('admin.importError') || 'Error importing plans');
+        console.error('Import error:', error);
+        alert(t('admin.importError') || 'Error importing plans. Make sure the file is valid.');
       }
     };
     reader.readAsText(file);
     e.target.value = '';
+  };
+
+  const handleSelectPlanForMerge = (planId) => {
+    const newSelected = new Set(selectedPlansForMerge);
+    if (newSelected.has(planId)) {
+      newSelected.delete(planId);
+    } else {
+      newSelected.add(planId);
+    }
+    setSelectedPlansForMerge(newSelected);
+  };
+
+  const handleMergePlans = () => {
+    if (selectedPlansForMerge.size < 2) {
+      alert(t('admin.selectAtLeastTwo') || 'Please select at least 2 plans to merge');
+      return;
+    }
+
+    if (!mergedPlanName.trim()) {
+      alert(t('admin.mergedPlanNameRequired') || 'Please enter a name for the merged plan');
+      return;
+    }
+
+    const selectedPlans = plans.filter(p => selectedPlansForMerge.has(p.id));
+    
+    // Merge markings from all selected plans
+    const mergedMarkings = selectedPlans.reduce((acc, plan) => {
+      return [...acc, ...(plan.markings || [])];
+    }, []);
+
+    // Use the first plan's spawn and take average of timings
+    const mergedPlan = {
+      id: Date.now(),
+      name: mergedPlanName.trim(),
+      description: `Merged from ${selectedPlans.length} plans: ${selectedPlans.map(p => p.name).join(', ')}`,
+      teamTimings: {
+        A: Math.round(selectedPlans.reduce((sum, p) => sum + (p.teamTimings?.A || 0), 0) / selectedPlans.length),
+        B: Math.round(selectedPlans.reduce((sum, p) => sum + (p.teamTimings?.B || 0), 0) / selectedPlans.length),
+        C: Math.round(selectedPlans.reduce((sum, p) => sum + (p.teamTimings?.C || 0), 0) / selectedPlans.length),
+        D: Math.round(selectedPlans.reduce((sum, p) => sum + (p.teamTimings?.D || 0), 0) / selectedPlans.length)
+      },
+      teamSpawn: selectedPlans[0].teamSpawn || 'BLUE_DOWN',
+      markings: mergedMarkings,
+      createdAt: new Date().toISOString(),
+      mergedFromPlans: selectedPlans.map(p => p.id)
+    };
+
+    setPlans([...plans, mergedPlan]);
+    setSelectedPlansForMerge(new Set());
+    setMergedPlanName('');
+    alert(t('admin.mergeSuccess') || `Successfully merged ${selectedPlans.length} plans!`);
   };
 
   const resetForm = () => {
@@ -170,81 +197,56 @@ const AdminPage = ({ onNavigateToPlan }) => {
       </div>
 
       <div className="admin-page-container">
-        {/* Form Section */}
+        {/* Merge Plans Section */}
         <div className="admin-form-container">
           <div className="admin-form-section">
-            <h2>{editingPlan ? t('admin.editPlan') : t('admin.createNewPlan') || 'Create New Plan'}</h2>
+            <h2>🔀 Merge Plans</h2>
+            <p className="merge-info">Select 2 or more plans from the right panel to combine them into one</p>
             
             <div className="form-group">
-              <label>{t('admin.planName') || 'Plan Name'}*</label>
+              <label>Merged Plan Name *</label>
               <input
                 type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder={t('admin.planNamePlaceholder') || 'e.g., Attack Strategy A'}
+                value={mergedPlanName}
+                onChange={(e) => setMergedPlanName(e.target.value)}
+                placeholder="e.g., Combined Strategy"
                 className="form-input"
               />
             </div>
 
-            <div className="form-group">
-              <label>{t('admin.description') || 'Description'}</label>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                placeholder={t('admin.descriptionPlaceholder') || 'Plan details, tactics, notes...'}
-                rows="4"
-                className="form-textarea"
-              />
-            </div>
-
-            <div className="form-group">
-              <label>{t('admin.teamSpawn') || 'Team Spawn'}</label>
-              <select
-                name="teamSpawn"
-                value={formData.teamSpawn}
-                onChange={handleInputChange}
-                className="form-select"
-              >
-                <option value="BLUE_DOWN">Blue Spawn (Bottom-Right)</option>
-                <option value="RED_UP">Red Spawn (Top-Left)</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>{t('admin.teamTimings') || 'Team Attack Timings'}</label>
-              <div className="timing-inputs">
-                {['A', 'B', 'C', 'D'].map(team => (
-                  <div key={team} className="timing-input">
-                    <label>Team {team}</label>
-                    <input
-                      type="number"
-                      min="0"
-                      max="40"
-                      value={formData.teamTimings[team]}
-                      onChange={(e) => handleTeamTimingChange(team, e.target.value)}
-                      className="form-input-small"
-                    />
-                    <span>min</span>
-                  </div>
-                ))}
-              </div>
+            <div className="merge-info-box">
+              <h3>Selected Plans: {selectedPlansForMerge.size}</h3>
+              {selectedPlansForMerge.size > 0 && (
+                <ul className="selected-plans-list">
+                  {plans.filter(p => selectedPlansForMerge.has(p.id)).map(p => (
+                    <li key={p.id}>{p.name}</li>
+                  ))}
+                </ul>
+              )}
+              <p className="merge-description">
+                {selectedPlansForMerge.size >= 2 
+                  ? `Will combine ${selectedPlansForMerge.size} plans with averaged team timings`
+                  : 'Select at least 2 plans to enable merge'}
+              </p>
             </div>
 
             <div className="form-actions">
               <button 
                 className="btn-primary"
-                onClick={handleSavePlan}
+                onClick={handleMergePlans}
+                disabled={selectedPlansForMerge.size < 2 || !mergedPlanName.trim()}
               >
-                {editingPlan ? t('admin.updatePlan') : t('admin.savePlan') || 'Save Plan'}
+                🔀 Merge Selected Plans
               </button>
-              {editingPlan && (
+              {selectedPlansForMerge.size > 0 && (
                 <button 
                   className="btn-secondary"
-                  onClick={resetForm}
+                  onClick={() => {
+                    setSelectedPlansForMerge(new Set());
+                    setMergedPlanName('');
+                  }}
                 >
-                  {t('admin.cancel') || 'Cancel'}
+                  Clear Selection
                 </button>
               )}
             </div>
@@ -286,7 +288,16 @@ const AdminPage = ({ onNavigateToPlan }) => {
             ) : (
               <div className="plans-list">
                 {plans.map(plan => (
-                  <div key={plan.id} className="plan-card">
+                  <div key={plan.id} className={`plan-card ${selectedPlansForMerge.has(plan.id) ? 'selected' : ''}`}>
+                    <div className="plan-checkbox-wrapper">
+                      <input
+                        type="checkbox"
+                        id={`plan-${plan.id}`}
+                        checked={selectedPlansForMerge.has(plan.id)}
+                        onChange={() => handleSelectPlanForMerge(plan.id)}
+                        className="plan-checkbox"
+                      />
+                    </div>
                     <div className="plan-info">
                       <h3>{plan.name}</h3>
                       {plan.description && <p>{plan.description}</p>}
