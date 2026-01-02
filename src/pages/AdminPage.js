@@ -8,6 +8,7 @@ const AdminPage = ({ onNavigateToPlan }) => {
   const [selectedPlansForMerge, setSelectedPlansForMerge] = useState(new Set());
   const [mergedPlanName, setMergedPlanName] = useState('');
   const [editingPlan, setEditingPlan] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [formData, setFormData] = useState({
     name: '',
     description: '',

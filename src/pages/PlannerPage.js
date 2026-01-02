@@ -106,14 +106,14 @@ const MAP_OBJECTIVES = {
 // Spawn area configurations: { topLeft, bottomRight }
 const SPAWN_AREAS = {
   BLUE_DOWN: {
-    label: 'Blue Spawn (Bottom-Right)',
-    ourSpawn: { label: 'Our Spawn', x1: 0.784, y1: 0.784, x2: 1, y2: 1 },
-    enemySpawn: { label: 'Enemy Spawn', x1: 0, y1: 0, x2: 0.216, y2: 0.216 }
-  },
-  RED_UP: {
-    label: 'Red Spawn (Top-Left)',
+    label: 'Blue Spawn (Top-Left)',
     ourSpawn: { label: 'Our Spawn', x1: 0, y1: 0, x2: 0.216, y2: 0.216 },
     enemySpawn: { label: 'Enemy Spawn', x1: 0.784, y1: 0.784, x2: 1, y2: 1 }
+  },
+  RED_UP: {
+    label: 'Red Spawn (Bottom-Right)',
+    ourSpawn: { label: 'Our Spawn', x1: 0.784, y1: 0.784, x2: 1, y2: 1 },
+    enemySpawn: { label: 'Enemy Spawn', x1: 0, y1: 0, x2: 0.216, y2: 0.216 }
   }
 };
 
@@ -174,7 +174,7 @@ const DEFAULT_PLAN = {
     { id: 1766777257847, x: 445, y: 562, team: "B", time: 20, duration: 10 },
     { id: 1766777261037, x: 299, y: 402, team: "B", time: 20, duration: 10 }
   ],
-  currentTime: 20,
+  currentTime: 0,
   markerDuration: 10,
   createdAt: "2025-12-26T19:41:48.599Z"
 };
@@ -191,8 +191,9 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
   const [markerDuration, setMarkerDuration] = useState(10); // Duración del marcador en minutos
   const [showCalibration, setShowCalibration] = useState(false);
   const [calibrationPoints, setCalibrationPoints] = useState([]);
-  const [selectedObjective, setSelectedObjective] = useState('militaryCenter1');
   const [draggingObjective, setDraggingObjective] = useState(null);
+  const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
+  const [viewMode, setViewMode] = useState('view'); // 'view' or 'edit' - default is 'view' for mobile-first UX
   const maxTime = 40;
   const [teamTimings, setTeamTimings] = useState({
     A: 0,
@@ -201,35 +202,73 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
     D: 4
   });
 
+  // Helper function to migrate pixel-based coordinates to percentage-based
+  const migrateMarkings = (markingsToMigrate) => {
+    if (!markingsToMigrate || !Array.isArray(markingsToMigrate)) return [];
+    
+    // Wait for container to be ready with actual dimensions
+    return new Promise((resolve) => {
+      const checkContainer = () => {
+        if (containerRef.current && containerRef.current.offsetWidth > 0 && containerRef.current.offsetHeight > 0) {
+          const containerWidth = containerRef.current.offsetWidth;
+          const containerHeight = containerRef.current.offsetHeight;
+          
+          const migrated = markingsToMigrate.map(marking => {
+            // If coordinates are larger than 100, they're in pixels and need conversion
+            if (marking.x > 100 || marking.y > 100) {
+              return {
+                ...marking,
+                x: (marking.x / containerWidth) * 100,
+                y: (marking.y / containerHeight) * 100
+              };
+            }
+            return marking;
+          });
+          resolve(migrated);
+        } else {
+          // Retry after a brief moment
+          setTimeout(checkContainer, 100);
+        }
+      };
+      checkContainer();
+    });
+  };
+
   // Load pending plan if one is passed
   useEffect(() => {
-    if (pendingPlan) {
-      if (pendingPlan.teamTimings) {
-        setTeamTimings(pendingPlan.teamTimings);
+    const loadPlan = async () => {
+      if (pendingPlan) {
+        if (pendingPlan.teamTimings) {
+          setTeamTimings(pendingPlan.teamTimings);
+        }
+        if (pendingPlan.teamSpawn) {
+          setTeamSpawn(pendingPlan.teamSpawn);
+        }
+        if (pendingPlan.markings && Array.isArray(pendingPlan.markings)) {
+          const migratedMarkings = await migrateMarkings(pendingPlan.markings);
+          setMarkings(migratedMarkings);
+        }
+        setCurrentTime(0);
+        setIsPlaying(true);
+        onPlanLoaded && onPlanLoaded();
+      } else {
+        // Load default plan if no pending plan
+        if (DEFAULT_PLAN.teamTimings) {
+          setTeamTimings(DEFAULT_PLAN.teamTimings);
+        }
+        if (DEFAULT_PLAN.teamSpawn) {
+          setTeamSpawn(DEFAULT_PLAN.teamSpawn);
+        }
+        if (DEFAULT_PLAN.markings && Array.isArray(DEFAULT_PLAN.markings)) {
+          const migratedMarkings = await migrateMarkings(DEFAULT_PLAN.markings);
+          setMarkings(migratedMarkings);
+        }
+        setCurrentTime(DEFAULT_PLAN.currentTime || 0);
+        setMarkerDuration(DEFAULT_PLAN.markerDuration || 10);
       }
-      if (pendingPlan.teamSpawn) {
-        setTeamSpawn(pendingPlan.teamSpawn);
-      }
-      if (pendingPlan.markings && Array.isArray(pendingPlan.markings)) {
-        setMarkings(pendingPlan.markings);
-      }
-      setCurrentTime(0);
-      setIsPlaying(true);
-      onPlanLoaded && onPlanLoaded();
-    } else {
-      // Load default plan if no pending plan
-      if (DEFAULT_PLAN.teamTimings) {
-        setTeamTimings(DEFAULT_PLAN.teamTimings);
-      }
-      if (DEFAULT_PLAN.teamSpawn) {
-        setTeamSpawn(DEFAULT_PLAN.teamSpawn);
-      }
-      if (DEFAULT_PLAN.markings && Array.isArray(DEFAULT_PLAN.markings)) {
-        setMarkings(DEFAULT_PLAN.markings);
-      }
-      setCurrentTime(DEFAULT_PLAN.currentTime || 0);
-      setMarkerDuration(DEFAULT_PLAN.markerDuration || 10);
-    }
+    };
+    
+    loadPlan();
   }, [pendingPlan, onPlanLoaded]);
 
   // Auto-advance time when playing
@@ -250,15 +289,21 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
   }, [isPlaying, maxTime]);
 
   const handleMapClick = (e) => {
+    // In view mode, don't create markers on click - user is just exploring
+    if (viewMode === 'view') return;
+    
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
+    // Store as percentages for responsive design
+    const percentX = (x / rect.width) * 100;
+    const percentY = (y / rect.height) * 100;
 
     const newMarking = {
       id: Date.now(),
-      x,
-      y,
+      x: percentX,
+      y: percentY,
       team: selectedTeam,
       time: currentTime,
       duration: markerDuration
@@ -283,8 +328,7 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
     const newPoint = {
       id: Date.now(),
       x: parseFloat(normalizedX.toFixed(3)),
-      y: parseFloat(normalizedY.toFixed(3)),
-      objective: selectedObjective
+      y: parseFloat(normalizedY.toFixed(3))
     };
 
     setCalibrationPoints([...calibrationPoints, newPoint]);
@@ -452,11 +496,6 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
       
       // Helper function to draw dashed line
       const drawDashedLine = (fromX, fromY, toX, toY, dashSize = 5) => {
-        const dx = toX - fromX;
-        const dy = toY - fromY;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const angle = Math.atan2(dy, dx);
-        
         ctx.strokeStyle = '#FFD700';
         ctx.lineWidth = 2;
         ctx.setLineDash([dashSize, dashSize]);
@@ -514,32 +553,34 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
     
     activeMarkings.forEach((marking) => {
       const teamColor = TEAMS[marking.team].color;
+      const markingX = (marking.x / 100) * canvas.width;
+      const markingY = (marking.y / 100) * canvas.height;
       
       // Draw shadow effect
       ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-      ctx.fillRect(marking.x - 14, marking.y - 14, 28, 28);
+      ctx.fillRect(markingX - 14, markingY - 14, 28, 28);
       
       // Draw marker background
       ctx.fillStyle = teamColor;
       ctx.globalAlpha = 0.75;
-      ctx.fillRect(marking.x - 15, marking.y - 15, 30, 30);
+      ctx.fillRect(markingX - 15, markingY - 15, 30, 30);
       ctx.globalAlpha = 1;
 
       // Draw marker border
       ctx.strokeStyle = teamColor;
       ctx.lineWidth = 2.5;
-      ctx.strokeRect(marking.x - 15, marking.y - 15, 30, 30);
+      ctx.strokeRect(markingX - 15, markingY - 15, 30, 30);
 
       // Draw team label
       ctx.fillStyle = '#fff';
       ctx.font = 'bold 18px Arial';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(marking.team, marking.x, marking.y - 2);
+      ctx.fillText(marking.team, markingX, markingY - 2);
       
       // Draw time label
       ctx.font = 'bold 10px Arial';
-      ctx.fillText(marking.time + 'm', marking.x, marking.y + 8);
+      ctx.fillText(marking.time + 'm', markingX, markingY + 8);
     });
 
     // Draw spawn area squares at corners
@@ -573,94 +614,11 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
     ctx.textAlign = 'left';
     ctx.fillText('Last Z - Canyon Clash Strategy', padding, 25);
     
-    // Draw legend
-    const legendY = canvas.height - 45;
-    ctx.font = '11px Arial';
-    ctx.textAlign = 'left';
-    Object.entries(TEAMS).forEach(([key, team], idx) => {
-      const x = padding + (idx * 140);
-      ctx.fillStyle = team.color;
-      ctx.fillRect(x, legendY, 12, 12);
-      ctx.fillStyle = '#333';
-      ctx.fillText(key + ' - ' + t(team.descKey), x + 16, legendY + 9);
-    });
-
-    // Download
-    const link = document.createElement('a');
-    link.href = canvas.toDataURL('image/png');
-    link.download = `canyon-clash-plan-${new Date().toISOString().split('T')[0]}.png`;
-    link.click();
-  };
-
-  const drawObjectivesAndMarkings = (ctx, canvas) => {
-    // Draw objectives with emojis
-    // Hospitals
-    MAP_OBJECTIVES.hospital.positions.forEach((pos) => {
-      drawObjectiveCircle(ctx, pos.x, pos.y, canvas, '#4ECDC4', 45);
-      drawEmojiAtPosition(ctx, MAP_OBJECTIVES.hospital.icon, pos.x, pos.y, canvas, 52);
-    });
-
-    // Military Centers
-    MAP_OBJECTIVES.militaryCenter.positions.forEach((pos) => {
-      drawObjectiveCircle(ctx, pos.x, pos.y, canvas, '#4CAF50', 45);
-      drawEmojiAtPosition(ctx, MAP_OBJECTIVES.militaryCenter.icon, pos.x, pos.y, canvas, 52);
-    });
-
-    // Energy Core
-    if (currentTime >= MAP_OBJECTIVES.energyCore.appearTime) {
-      drawObjectiveCircle(ctx, MAP_OBJECTIVES.energyCore.position.x, MAP_OBJECTIVES.energyCore.position.y, canvas, '#FFD700', 45);
-      drawEmojiAtPosition(ctx, MAP_OBJECTIVES.energyCore.icon, MAP_OBJECTIVES.energyCore.position.x, MAP_OBJECTIVES.energyCore.position.y, canvas, 52);
-    }
-
-    // Captain
-    if (currentTime >= 5) {
-      drawObjectiveCircle(ctx, MAP_OBJECTIVES.captain.position.x, MAP_OBJECTIVES.captain.position.y, canvas, '#FF6B6B', 45);
-      drawEmojiAtPosition(ctx, MAP_OBJECTIVES.captain.icon, MAP_OBJECTIVES.captain.position.x, MAP_OBJECTIVES.captain.position.y, canvas, 52);
-    }
-
-    // Refineries
-    MAP_OBJECTIVES.refinery.positions.forEach((pos) => {
-      drawObjectiveCircle(ctx, pos.x, pos.y, canvas, '#4ECDC4', 35);
-      drawEmojiAtPosition(ctx, MAP_OBJECTIVES.refinery.icon, pos.x, pos.y, canvas, 40);
-    });
-
-    // Draw markings with enhanced styling
-    markings.forEach((marking) => {
-      const teamColor = TEAMS[marking.team].color;
-      
-      // Draw shadow effect
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-      ctx.fillRect(marking.x - 14, marking.y - 14, 28, 28);
-      
-      // Draw marker background
-      ctx.fillStyle = teamColor;
-      ctx.globalAlpha = 0.75;
-      ctx.fillRect(marking.x - 15, marking.y - 15, 30, 30);
-      ctx.globalAlpha = 1;
-
-      // Draw marker border
-      ctx.strokeStyle = teamColor;
-      ctx.lineWidth = 2.5;
-      ctx.strokeRect(marking.x - 15, marking.y - 15, 30, 30);
-
-      // Draw team label
-      ctx.fillStyle = '#fff';
-      ctx.font = 'bold 18px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(marking.team, marking.x, marking.y - 2);
-      
-      // Draw time label
-      ctx.font = 'bold 10px Arial';
-      ctx.fillText(marking.time + 'm', marking.x, marking.y + 8);
-    });
-
-    // Add title and legend
-    const padding = 10;
-    ctx.fillStyle = '#333';
-    ctx.font = 'bold 16px Arial';
-    ctx.textAlign = 'left';
-    ctx.fillText('Last Z - Canyon Clash Strategy', padding, 25);
+    // Add current time display
+    ctx.font = '12px Arial';
+    ctx.fillStyle = '#666';
+    const timeText = `Battle Time: ${currentTime}m/${maxTime}m`;
+    ctx.fillText(timeText, padding, 45);
     
     // Draw legend
     const legendY = canvas.height - 45;
@@ -677,7 +635,7 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
     // Download
     const link = document.createElement('a');
     link.href = canvas.toDataURL('image/png');
-    link.download = `canyon-clash-plan-${new Date().toISOString().split('T')[0]}.png`;
+    link.download = `canyon-clash-plan-${currentTime}m-${new Date().toISOString().split('T')[0]}.png`;
     link.click();
   };
 
@@ -740,64 +698,7 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
     ctx.shadowBlur = 0;
   };
 
-  const drawMarkingsAndExport = (ctx, canvas) => {
-    // Draw markings with enhanced styling
-    markings.forEach((marking) => {
-      const teamColor = TEAMS[marking.team].color;
-      
-      // Draw shadow effect
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-      ctx.fillRect(marking.x - 14, marking.y - 14, 28, 28);
-      
-      // Draw marker background
-      ctx.fillStyle = teamColor;
-      ctx.globalAlpha = 0.75;
-      ctx.fillRect(marking.x - 15, marking.y - 15, 30, 30);
-      ctx.globalAlpha = 1;
-
-      // Draw marker border
-      ctx.strokeStyle = teamColor;
-      ctx.lineWidth = 2.5;
-      ctx.strokeRect(marking.x - 15, marking.y - 15, 30, 30);
-
-      // Draw team label
-      ctx.fillStyle = '#fff';
-      ctx.font = 'bold 18px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(marking.team, marking.x, marking.y - 2);
-      
-      // Draw time label
-      ctx.font = 'bold 10px Arial';
-      ctx.fillText(marking.time + 'm', marking.x, marking.y + 8);
-    });
-
-    // Add title and legend
-    const padding = 10;
-    ctx.fillStyle = '#333';
-    ctx.font = 'bold 16px Arial';
-    ctx.textAlign = 'left';
-    ctx.fillText('Last Z - Canyon Clash Strategy', padding, 25);
-    
-    // Draw legend
-    const legendY = canvas.height - 45;
-    ctx.font = '11px Arial';
-    ctx.textAlign = 'left';
-    Object.entries(TEAMS).forEach(([key, team], idx) => {
-      const x = padding + (idx * 140);
-      ctx.fillStyle = team.color;
-      ctx.fillRect(x, legendY, 12, 12);
-      ctx.fillStyle = '#333';
-      ctx.fillText(key + ' - ' + t(team.descKey), x + 16, legendY + 9);
-    });
-
-    // Download
-    const link = document.createElement('a');
-    link.href = canvas.toDataURL('image/png');
-    link.download = `canyon-clash-plan-${new Date().toISOString().split('T')[0]}.png`;
-    link.click();
-  };
-
+  // eslint-disable-next-line no-unused-vars
   const handleSavePlanClick = () => {
     const timestamp = new Date().toISOString().split('T')[0];
     const planName = `Canyon-Clash-Plan-${timestamp}`;
@@ -847,28 +748,31 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
   return (
     <div className="canyon-clash-planner">
       <div className="header-container">
-        <h1>{t('title')}</h1>
+        <div className="header-title-section">
+          <h1>⚔️ ROLs' Canyon Clash Strategy</h1>
+          <p className="header-subtitle">Made with ❤️ by ROLs #392</p>
+        </div>
         <div className="header-controls">
           <button 
-            className="save-plan-btn"
-            onClick={handleSavePlanClick}
-            title="Save current strategy as ROLs Plan"
+            className={`view-mode-btn ${viewMode === 'view' ? 'active' : ''}`}
+            onClick={() => setViewMode(viewMode === 'view' ? 'edit' : 'view')}
+            title={viewMode === 'view' ? 'Click to enable editing' : 'Click to disable editing'}
           >
-            💾 {t('admin.savePlanToROLs') || 'Save as ROLs'}
+            {viewMode === 'view' ? '🔒 View Only' : '✏️ Editing'}
           </button>
           <button 
             className="admin-btn"
             onClick={onAdminClick}
-            title="ROLs Plans Administration"
+            title="ROLs Plans - Save, Load & Manage strategies"
           >
-            ⚙️ {t('admin.rolsPlans') || 'Admin'}
+            💾 {t('admin.rolsPlans') || 'ROLs Plans'}
           </button>
           <button 
             className="about-btn"
             onClick={onAboutClick}
             title="About Canyon Clash"
           >
-            ℹ️ {t('about.title') || 'About'}
+            📖 {t('about.title') || 'About'}
           </button>
           <select 
             value={i18n.language} 
@@ -892,7 +796,7 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
             onClick={() => setShowTipsModal(!showTipsModal)}
             title="Battle Tips"
           >
-            ℹ
+            💡
           </button>
         </div>
       </div>
@@ -1081,8 +985,9 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
                 key={marking.id}
                 className="marking"
                 style={{
-                  left: `${marking.x}px`,
-                  top: `${marking.y}px`,
+                  left: `${marking.x}%`,
+                  top: `${marking.y}%`,
+                  transform: 'translate(-50%, -50%)',
                   borderColor: TEAMS[marking.team].color,
                   backgroundColor: TEAMS[marking.team].color
                 }}
@@ -1270,65 +1175,22 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
                 ))}
               </>
             )}
+
+            {/* Current Time Display Overlay */}
+            <div className="map-time-display">
+              <div className="time-badge">
+                <span className="time-icon">⏱️</span>
+                <span className="time-value">{currentTime}m</span>
+              </div>
+              <span className="time-status">{isPlaying ? '▶ Running' : '⏸ Paused'}</span>
+            </div>
           </div>
         </div>
 
         {/* Right Panel */}
         <div className="right-panel">
-          {/* Calibration Button */}
-          <button
-            className="calibration-btn"
-            onClick={() => {
-              // Initialize calibration points with current MAP_OBJECTIVES positions
-              const initialPoints = [
-                { id: 'h1', objective: 'hospital1', x: MAP_OBJECTIVES.hospital.positions[0].x, y: MAP_OBJECTIVES.hospital.positions[0].y },
-                { id: 'h2', objective: 'hospital2', x: MAP_OBJECTIVES.hospital.positions[1].x, y: MAP_OBJECTIVES.hospital.positions[1].y },
-                { id: 'm1', objective: 'militaryCenter1', x: MAP_OBJECTIVES.militaryCenter.positions[0].x, y: MAP_OBJECTIVES.militaryCenter.positions[0].y },
-                { id: 'm2', objective: 'militaryCenter2', x: MAP_OBJECTIVES.militaryCenter.positions[1].x, y: MAP_OBJECTIVES.militaryCenter.positions[1].y },
-                { id: 'cap', objective: 'captain', x: MAP_OBJECTIVES.captain.position.x, y: MAP_OBJECTIVES.captain.position.y },
-                { id: 'ec', objective: 'energyCore', x: MAP_OBJECTIVES.energyCore.position.x, y: MAP_OBJECTIVES.energyCore.position.y },
-                ...MAP_OBJECTIVES.refinery.positions.map((pos, idx) => ({
-                  id: `ref${idx + 1}`,
-                  objective: `refinery${idx + 1}`,
-                  x: pos.x,
-                  y: pos.y
-                }))
-              ];
-              setCalibrationPoints(initialPoints);
-              setShowCalibration(true);
-            }}
-            title="Open map calibration tool to set objective positions"
-          >
-            🎯 Calibrate Map
-          </button>
-
-          {/* Spawn Selection */}
-          <div className="spawn-selector">
-            <h3>{t('spawnPosition')}</h3>
-            <div className="spawn-buttons">
-              <button
-                className={`spawn-btn ${teamSpawn === 'BLUE_DOWN' ? 'active' : ''}`}
-                onClick={() => setTeamSpawn('BLUE_DOWN')}
-                title="We spawn at bottom-right"
-              >
-                {t('blueSpawn')}
-              </button>
-              <button
-                className={`spawn-btn ${teamSpawn === 'RED_UP' ? 'active' : ''}`}
-                onClick={() => setTeamSpawn('RED_UP')}
-                title="We spawn at top-left"
-              >
-                {t('redSpawn')}
-              </button>
-            </div>
-            <p className="spawn-info">
-              {teamSpawn === 'BLUE_DOWN' 
-                ? t('blueSpawnInfo')
-                : t('redSpawnInfo')}
-            </p>
-          </div>
-
-          {/* Team Selection */}
+          {/* Team Selection - Main - Only visible in Edit Mode */}
+          {viewMode === 'edit' && (
           <div className="team-controls">
             <h3>{t('selectTeam')}</h3>
             <div className="team-buttons">
@@ -1346,6 +1208,27 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
             </div>
             <p className="current-time">{t('time')}: {currentTime}m | {t('clickToMark')}</p>
           </div>
+          )}
+
+          {/* Marker Duration Control - Only visible in Edit Mode */}
+          {viewMode === 'edit' && (
+          <div className="duration-control">
+            <h3>⏱️ Marker Duration</h3>
+            <div className="duration-input-group">
+              <input
+                type="number"
+                min="1"
+                max={maxTime}
+                step="1"
+                value={markerDuration}
+                onChange={(e) => setMarkerDuration(Math.max(1, parseInt(e.target.value) || 1))}
+                className="duration-input"
+              />
+              <span className="duration-unit">min</span>
+            </div>
+            <p className="duration-info">Markers will stay for {markerDuration} minute{markerDuration !== 1 ? 's' : ''}</p>
+          </div>
+          )}
 
           {/* Timeline Slider */}
           <div className="timeline-section">
@@ -1418,35 +1301,77 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
             <p className="duration-info">Markers will stay for {markerDuration} minute{markerDuration !== 1 ? 's' : ''}</p>
           </div>
 
-          {/* Team Timings */}
-          <div className="team-timings-section">
-            <h3>{t('teamAttackTimes')}</h3>
-            {Object.entries(TEAMS).map(([key, team]) => (
-              <div key={key} className="timing-card" style={{ borderLeftColor: team.color }}>
-                <label>{t(team.labelKey)}</label>
-                <div className="timing-input-group">
-                  <input
-                    type="number"
-                    min="0"
-                    max={maxTime}
-                    step="1"
-                    value={teamTimings[key]}
-                    onChange={(e) => handleTeamTimingChange(key, e.target.value)}
-                    className="timing-input"
-                  />
-                  <span className="timing-unit">{t('min')}</span>
+          {/* Advanced Settings (Collapsible) */}
+          <div className="advanced-settings-section">
+            <button 
+              className="advanced-settings-toggle"
+              onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}
+            >
+              <span className="toggle-icon">{showAdvancedSettings ? '▼' : '▶'}</span>
+              <span>⚙️ Advanced Settings</span>
+            </button>
+            
+            {showAdvancedSettings && (
+              <div className="advanced-settings-content">
+                {/* Calibration Button */}
+                <button
+                  className="calibration-btn"
+                  onClick={() => {
+                    // Initialize calibration points with current MAP_OBJECTIVES positions
+                    const initialPoints = [
+                      { id: 'h1', objective: 'hospital1', x: MAP_OBJECTIVES.hospital.positions[0].x, y: MAP_OBJECTIVES.hospital.positions[0].y },
+                      { id: 'h2', objective: 'hospital2', x: MAP_OBJECTIVES.hospital.positions[1].x, y: MAP_OBJECTIVES.hospital.positions[1].y },
+                      { id: 'm1', objective: 'militaryCenter1', x: MAP_OBJECTIVES.militaryCenter.positions[0].x, y: MAP_OBJECTIVES.militaryCenter.positions[0].y },
+                      { id: 'm2', objective: 'militaryCenter2', x: MAP_OBJECTIVES.militaryCenter.positions[1].x, y: MAP_OBJECTIVES.militaryCenter.positions[1].y },
+                      { id: 'cap', objective: 'captain', x: MAP_OBJECTIVES.captain.position.x, y: MAP_OBJECTIVES.captain.position.y },
+                      { id: 'ec', objective: 'energyCore', x: MAP_OBJECTIVES.energyCore.position.x, y: MAP_OBJECTIVES.energyCore.position.y },
+                      ...MAP_OBJECTIVES.refinery.positions.map((pos, idx) => ({
+                        id: `ref${idx + 1}`,
+                        objective: `refinery${idx + 1}`,
+                        x: pos.x,
+                        y: pos.y
+                      }))
+                    ];
+                    setCalibrationPoints(initialPoints);
+                    setShowCalibration(true);
+                  }}
+                  title="Open map calibration tool to set objective positions"
+                >
+                  🎯 Calibrate Map
+                </button>
+
+                {/* Team Timings */}
+                <div className="team-timings-section">
+                  <h3>{t('teamAttackTimes')}</h3>
+                  {Object.entries(TEAMS).map(([key, team]) => (
+                    <div key={key} className="timing-card" style={{ borderLeftColor: team.color }}>
+                      <label>{t(team.labelKey)}</label>
+                      <div className="timing-input-group">
+                        <input
+                          type="number"
+                          min="0"
+                          max={maxTime}
+                          step="1"
+                          value={teamTimings[key]}
+                          onChange={(e) => handleTeamTimingChange(key, e.target.value)}
+                          className="timing-input"
+                        />
+                        <span className="timing-unit">{t('min')}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max={maxTime}
+                        step="1"
+                        value={teamTimings[key]}
+                        onChange={(e) => handleTeamTimingChange(key, e.target.value)}
+                        className="timing-slider"
+                      />
+                    </div>
+                  ))}
                 </div>
-                <input
-                  type="range"
-                  min="0"
-                  max={maxTime}
-                  step="1"
-                  value={teamTimings[key]}
-                  onChange={(e) => handleTeamTimingChange(key, e.target.value)}
-                  className="timing-slider"
-                />
               </div>
-            ))}
+            )}
           </div>
 
           {/* Markings List */}
@@ -1466,7 +1391,7 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
                       <span className="marking-team" style={{ backgroundColor: TEAMS[marking.team].color }}>
                         {marking.team}
                       </span>
-                      <span className="marking-coords">{Math.round(marking.x)}, {Math.round(marking.y)}</span>
+                      <span className="marking-coords">{Math.round(marking.x)}%, {Math.round(marking.y)}%</span>
                       <div className="marking-time-info">
                         <span className="marking-time-label">{marking.time}m</span>
                         <span className="marking-duration-sep">→</span>
@@ -1500,6 +1425,22 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
           </div>
         </div>
       </div>
+
+      {/* Floating Play Button (Mobile) */}
+      <button
+        className={`floating-play-btn ${isPlaying ? 'playing' : ''}`}
+        onClick={() => {
+          if (currentTime >= maxTime) {
+            setCurrentTime(0);
+            setIsPlaying(true);
+          } else {
+            setIsPlaying(!isPlaying);
+          }
+        }}
+        title={isPlaying ? 'Pause' : 'Play'}
+      >
+        {isPlaying ? '⏸' : '▶'}
+      </button>
     </div>
   );
 }

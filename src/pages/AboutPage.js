@@ -11,7 +11,10 @@ const AboutPage = ({ onNavigateToPlanner }) => {
         <button className="back-btn" onClick={onNavigateToPlanner}>
           ← {t('back') || 'Back'}
         </button>
-        <h1>About Canyon Clash</h1>
+        <div className="header-content">
+          <h1>⚔️ ROLs' Canyon Clash Strategy</h1>
+          <p className="header-subtitle">Made with ❤️ by ROLs #392</p>
+        </div>
       </div>
 
       <div className="about-content">
