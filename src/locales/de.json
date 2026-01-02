@@ -18,6 +18,18 @@
   "noMarkings": "Keine Markierungen",
   "deletMarking": "Markierung löschen",
   "selectLanguage": "Sprache",
+  "viewOnly": "Nur Anzeigen",
+  "editing": "Bearbeitung",
+  "clickToEnableEditing": "Klicken Sie, um die Bearbeitung zu aktivieren",
+  "clickToDisableEditing": "Klicken Sie, um die Bearbeitung zu deaktivieren",
+  "rolsPlansTooltip": "ROLS-Pläne - Strategien speichern, laden und verwalten",
+  "aboutCanyonClash": "Über Canyon Clash",
+  "battleTipsTooltip": "Kampftipps",
+  "ourSpawnArea": "Unsere Spawnfläche",
+  "enemySpawnArea": "Gegnerische Spawnfläche",
+  "pause": "Pause",
+  "play": "Abspielen",
+  "calibrationTool": "Öffnen Sie das Kartenkalibrationstool, um Objektpositionen einzustellen",
   "tips": {
     "tip1": "Heilen Sie Truppen in Chargen von 100, um Heilungsbeschleunigungen nicht zu verschwenden. Alle Truppen werden am Ende des Spiels geheilt.",
     "tip2": "Der Angriff auf Hauptquartiere verbraucht keinen Kraftstoff - nutzen Sie dies strategisch.",
@@ -84,6 +96,24 @@
     "delete": "Löschen",
     "deleteTooltip": "Diesen Plan löschen",
     "confirmDelete": "Möchten Sie diesen Plan wirklich löschen?"
+  },
+  "worldWatch": {
+    "title": "Weltuhr - Ereigniszeiten",
+    "subtitle": "Konvertieren Sie Ereigniszeiten von Serverzeit (GMT-2) in Ihre Zeitzone",
+    "serverTimeLabel": "SERVERZEIT (GMT-2)",
+    "yourTimeLabel": "IHRE AKTUELLE ZEIT ()",
+    "selectTimezone": "Wählen Sie Ihre Zeitzone",
+    "allEventTimesBy": "Alle Ereigniszeiten nach Zeitzone",
+    "eventTimesTable": "Ereigniszeiten Tabelle",
+    "canyonClash": "Canyon Clash",
+    "capitalClash": "Capital Clash",
+    "avaBusterDay": "AvA Buster Tag",
+    "friday": "Freitag",
+    "saturday": "Samstag",
+    "tyrantTime": "Tyrann Zeit",
+    "tyrantSubtitle": "Tyrann oder benutzerdefinierte Ereigniszeit in Ihrer lokalen Zeit",
+    "serverTime": "Serverzeit",
+    "yourLocalTime": "Ihre lokale Zeit"
   },
   "about": {
     "title": "Über Canyon Clash"

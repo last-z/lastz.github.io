@@ -18,6 +18,18 @@
   "noMarkings": "마크 없음",
   "deletMarking": "마크 삭제",
   "selectLanguage": "언어",
+  "viewOnly": "보기만",
+  "editing": "편집 중",
+  "clickToEnableEditing": "클릭하여 편집 활성화",
+  "clickToDisableEditing": "클릭하여 편집 비활성화",
+  "rolsPlansTooltip": "ROLS 계획 - 전략 저장, 로드 및 관리",
+  "aboutCanyonClash": "캐니언 클래시 정보",
+  "battleTipsTooltip": "전투 팁",
+  "ourSpawnArea": "우리의 스폰 지역",
+  "enemySpawnArea": "적의 스폰 지역",
+  "pause": "일시정지",
+  "play": "재생",
+  "calibrationTool": "지도 보정 도구 열기...",
   "tips": {
     "tip1": "치유 스피드업 낭비를 피하기 위해 100단위로 군대를 치유합니다. 모든 군대는 경기 종료 시 치유됩니다.",
     "tip2": "본부 공격은 연료를 사용하지 않습니다 - 전략적으로 사용하세요.",
@@ -84,6 +96,24 @@
     "delete": "삭제",
     "deleteTooltip": "이 계획 삭제",
     "confirmDelete": "이 계획을 삭제하시겠습니까?"
+  },
+  "worldWatch": {
+    "title": "월드 워치 - 이벤트 시간",
+    "subtitle": "서버 시간(GMT-2)에서 당신의 시간대로 이벤트 시간 변환",
+    "serverTimeLabel": "서버 시간 (GMT-2)",
+    "yourTimeLabel": "당신의 현재 시간 ()",
+    "selectTimezone": "시간대 선택",
+    "allEventTimesBy": "시간대별 모든 이벤트 시간",
+    "eventTimesTable": "이벤트 시간 표",
+    "canyonClash": "캐니언 클래시",
+    "capitalClash": "캐피탈 클래시",
+    "avaBusterDay": "AvA 버스터 데이",
+    "friday": "금요일",
+    "saturday": "토요일",
+    "tyrantTime": "폭군 시간",
+    "tyrantSubtitle": "폭군 또는 사용자 정의 이벤트 시간(현지 시간)",
+    "serverTime": "서버 시간",
+    "yourLocalTime": "당신의 현지 시간"
   },
   "about": {
     "title": "캐니언 클래시 정보"

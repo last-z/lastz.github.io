@@ -17,8 +17,18 @@
   "clearAll": "すべてクリア",
   "noMarkings": "マークなし",
   "deletMarking": "マークを削除",
-  "selectLanguage": "言語",
-  "tips": {
+  "selectLanguage": "言語",  "viewOnly": "表示のみ",
+  "editing": "編集中",
+  "clickToEnableEditing": "クリックして編集を有効にする",
+  "clickToDisableEditing": "クリックして編集を無効にする",
+  "rolsPlansTooltip": "ROLSプラン - 戦略を保存、読み込み、管理する",
+  "aboutCanyonClash": "キャニオンクラッシュについて",
+  "battleTipsTooltip": "戦闘のヒント",
+  "ourSpawnArea": "私たちのスポーンエリア",
+  "enemySpawnArea": "敵スポーンエリア",
+  "pause": "一時停止",
+  "play": "再生",
+  "calibrationTool": "マップキャリブレーションツールを開いて目的地の位置を設定する",  "tips": {
     "tip1": "治療スピードアップの無駄を避けるため、100単位でユニットを治療してください。すべてのユニットはマッチ終了時に治療されます。",
     "tip2": "本部の攻撃は燃料を消費しません - 戦略的に使用してください。",
     "tip3": "本部を破壊すると、敵がその場所からユニットを配備するのを防ぐことができます。",
@@ -84,6 +94,24 @@
     "delete": "削除",
     "deleteTooltip": "この計画を削除",
     "confirmDelete": "この計画を削除してもよろしいですか？"
+  },
+  "worldWatch": {
+    "title": "ワールドウォッチ - イベント時間",
+    "subtitle": "サーバー時間（GMT-2）からあなたのタイムゾーンにイベント時間を変換",
+    "serverTimeLabel": "サーバー時間（GMT-2）",
+    "yourTimeLabel": "あなたの現在時刻（）",
+    "selectTimezone": "タイムゾーンを選択",
+    "allEventTimesBy": "タイムゾーン別すべてのイベント時間",
+    "eventTimesTable": "イベント時間表",
+    "canyonClash": "キャニオンクラッシュ",
+    "capitalClash": "キャピタルクラッシュ",
+    "avaBusterDay": "AvA バスターデー",
+    "friday": "金曜日",
+    "saturday": "土曜日",
+    "tyrantTime": "タイラント時間",
+    "tyrantSubtitle": "タイラントまたはカスタムイベント時間（現地時間）",
+    "serverTime": "サーバー時間",
+    "yourLocalTime": "あなたの現地時間"
   },
   "about": {
     "title": "キャニオンクラッシュについて"

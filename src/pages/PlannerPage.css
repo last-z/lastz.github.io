@@ -1,5 +1,5 @@
 .canyon-clash-planner {
-  background: linear-gradient(135deg, #D4A574 0%, #c49464 100%);
+  background: linear-gradient(135deg, #0a0e27 0%, #1a0a3e 50%, #0d1a2e 100%);
   background-attachment: fixed;
   min-height: 100vh;
   padding: 20px;
@@ -42,6 +42,15 @@
   font-weight: 500;
   letter-spacing: 0.3px;
   opacity: 0.95;
+}
+
+.header-byline {
+  color: rgba(255, 255, 255, 0.75);
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  opacity: 0.85;
 }
 
 .header-controls {
@@ -1109,15 +1118,12 @@
   border-radius: 4px;
   background-color: rgba(255, 255, 255, 0.25);
   cursor: pointer;
-  left: 0;
-  top: 0;
-  transform: translate(calc(-50% + var(--left-offset, 0)), calc(-50% + var(--top-offset, 0)));
   transition: all 0.3s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .marking:hover {
-  transform: translate(calc(-50% + var(--left-offset, 0)), calc(-50% + var(--top-offset, 0))) scale(1.12);
+  transform: scale(1.12);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
@@ -2235,7 +2241,49 @@
     padding: 8px;
   }
 
+  .header-container {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 12px;
+  }
+
+  .header-title-section {
+    flex: 1;
+  }
+
   .canyon-clash-planner h1 {
+    font-size: 24px;
+  }
+
+  .header-subtitle {
+    font-size: 12px;
+  }
+
+  .header-controls {
+    width: 100%;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .view-mode-btn,
+  .admin-btn,
+  .about-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+    flex: 1;
+    min-width: 80px;
+  }
+
+  .language-selector {
+    padding: 8px 10px;
+    font-size: 12px;
+    flex: 0 1 auto;
+  }
+
+  .info-btn {
+    width: 40px;
+    height: 40px;
     font-size: 18px;
   }
 

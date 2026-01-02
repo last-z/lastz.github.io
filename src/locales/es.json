@@ -18,6 +18,18 @@
   "noMarkings": "Sin marcas",
   "deletMarking": "Eliminar marca",
   "selectLanguage": "Idioma",
+  "viewOnly": "Solo Ver",
+  "editing": "Editando",
+  "clickToEnableEditing": "Haz clic para habilitar la edición",
+  "clickToDisableEditing": "Haz clic para deshabilitar la edición",
+  "rolsPlansTooltip": "Planes ROLS - Guardar, Cargar y Administrar estrategias",
+  "aboutCanyonClash": "Acerca de Canyon Clash",
+  "battleTipsTooltip": "Consejos de Batalla",
+  "ourSpawnArea": "Área de Aparición Nuestra",
+  "enemySpawnArea": "Área de Aparición Enemiga",
+  "pause": "Pausar",
+  "play": "Reproducir",
+  "calibrationTool": "Abre la herramienta de calibración del mapa para establecer posiciones de objetivos",
   "tips": {
     "tip1": "Cura las tropas en lotes de 100 para evitar desperdiciar aceleradores de curación. Todas las tropas se curarán al final de la partida.",
     "tip2": "Atacar cuarteles generales no consume combustible - úsalo estratégicamente.",
@@ -84,6 +96,24 @@
     "delete": "Eliminar",
     "deleteTooltip": "Eliminar este plan",
     "confirmDelete": "¿Estás seguro de que deseas eliminar este plan?"
+  },
+  "worldWatch": {
+    "title": "Reloj Mundial - Tiempos de Evento",
+    "subtitle": "Convierte horarios de evento desde Hora del Servidor (GMT-2) a tu zona horaria",
+    "serverTimeLabel": "HORA DEL SERVIDOR (GMT-2)",
+    "yourTimeLabel": "TU HORA ACTUAL ()",
+    "selectTimezone": "Selecciona tu Zona Horaria",
+    "allEventTimesBy": "Todos los Tiempos de Evento por Zona Horaria",
+    "eventTimesTable": "Tabla de Tiempos de Evento",
+    "canyonClash": "Canyon Clash",
+    "capitalClash": "Capital Clash",
+    "avaBusterDay": "Día de Asalto AvA",
+    "friday": "Viernes",
+    "saturday": "Sábado",
+    "tyrantTime": "Hora del Tirano",
+    "tyrantSubtitle": "Hora del Tirano u evento personalizado en tu hora local",
+    "serverTime": "Hora del Servidor",
+    "yourLocalTime": "Tu Hora Local"
   },
   "about": {
     "title": "Acerca de Canyon Clash"

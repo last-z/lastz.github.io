@@ -756,45 +756,28 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
           <button 
             className={`view-mode-btn ${viewMode === 'view' ? 'active' : ''}`}
             onClick={() => setViewMode(viewMode === 'view' ? 'edit' : 'view')}
-            title={viewMode === 'view' ? 'Click to enable editing' : 'Click to disable editing'}
+            title={viewMode === 'view' ? t('clickToEnableEditing') : t('clickToDisableEditing')}
           >
-            {viewMode === 'view' ? '🔒 View Only' : '✏️ Editing'}
+            {viewMode === 'view' ? `🔒 ${t('viewOnly')}` : `✏️ ${t('editing')}`}
           </button>
           <button 
             className="admin-btn"
             onClick={onAdminClick}
-            title="ROLs Plans - Save, Load & Manage strategies"
+            title={t('rolsPlansTooltip')}
           >
             💾 {t('admin.rolsPlans') || 'ROLs Plans'}
           </button>
           <button 
             className="about-btn"
             onClick={onAboutClick}
-            title="About Canyon Clash"
+            title={t('aboutCanyonClash')}
           >
             📖 {t('about.title') || 'About'}
           </button>
-          <select 
-            value={i18n.language} 
-            onChange={(e) => {
-              i18n.changeLanguage(e.target.value);
-              localStorage.setItem('language', e.target.value);
-            }}
-            className="language-selector"
-          >
-            <option value="en">English</option>
-            <option value="zh">简体中文</option>
-            <option value="zh-TW">繁體中文</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-            <option value="es">Español</option>
-            <option value="ja">日本語</option>
-            <option value="ko">한국어</option>
-          </select>
           <button 
             className="info-btn"
             onClick={() => setShowTipsModal(!showTipsModal)}
-            title="Battle Tips"
+            title={t('battleTipsTooltip')}
           >
             💡
           </button>
@@ -959,7 +942,7 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
                       width: `${(spawn.ourSpawn.x2 - spawn.ourSpawn.x1) * 100}%`,
                       height: `${(spawn.ourSpawn.y2 - spawn.ourSpawn.y1) * 100}%`,
                     }}
-                    title="Our Spawn Area"
+                    title={t('ourSpawnArea')}
                   />
                   {/* Enemy Spawn Area */}
                   <div
@@ -970,7 +953,7 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
                       width: `${(spawn.enemySpawn.x2 - spawn.enemySpawn.x1) * 100}%`,
                       height: `${(spawn.enemySpawn.y2 - spawn.enemySpawn.y1) * 100}%`,
                     }}
-                    title="Enemy Spawn Area"
+                    title={t('enemySpawnArea')}
                   />
                 </>
               );
@@ -1000,7 +983,7 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
                     e.stopPropagation();
                     setMarkings(markings.filter(m => m.id !== marking.id));
                   }}
-                  title="Delete marking"
+                  title={t('deletMarking')}
                 >
                   ✕
                 </button>
@@ -1244,7 +1227,7 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
                     setIsPlaying(!isPlaying);
                   }
                 }}
-                title={isPlaying ? 'Pause' : 'Play'}
+                title={isPlaying ? t('pause') : t('play')}
               >
                 {isPlaying ? '⏸' : '▶'}
               </button>
@@ -1335,7 +1318,7 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
                     setCalibrationPoints(initialPoints);
                     setShowCalibration(true);
                   }}
-                  title="Open map calibration tool to set objective positions"
+                  title={t('calibrationTool')}
                 >
                   🎯 Calibrate Map
                 </button>
@@ -1437,7 +1420,7 @@ function PlannerPage({ onAdminClick, onAboutClick, pendingPlan, onPlanLoaded }) 
             setIsPlaying(!isPlaying);
           }
         }}
-        title={isPlaying ? 'Pause' : 'Play'}
+        title={isPlaying ? t('pause') : t('play')}
       >
         {isPlaying ? '⏸' : '▶'}
       </button>

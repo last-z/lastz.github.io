@@ -18,6 +18,18 @@
   "noMarkings": "暂无标记",
   "deletMarking": "删除标记",
   "selectLanguage": "语言",
+  "viewOnly": "仅查看",
+  "editing": "编辑中",
+  "clickToEnableEditing": "点击启用编辑",
+  "clickToDisableEditing": "点击禁用编辑",
+  "rolsPlansTooltip": "ROLS 计划 - 保存、加载和管理策略",
+  "aboutCanyonClash": "关于峡谷冲突",
+  "battleTipsTooltip": "战斗提示",
+  "ourSpawnArea": "我们的出生区",
+  "enemySpawnArea": "敌人的出生区",
+  "pause": "暂停",
+  "play": "播放",
+  "calibrationTool": "打开地图校准工具...",
   "tips": {
     "tip1": "分批治疗部队（每批100个）以避免浪费治疗加速。所有部队将在比赛结束时恢复。",
     "tip2": "攻击总部不消耗燃料 - 要战略性地利用。",
@@ -84,6 +96,24 @@
     "delete": "删除",
     "deleteTooltip": "删除此计划",
     "confirmDelete": "确定要删除此计划吗？"
+  },
+  "worldWatch": {
+    "title": "世界时间 - 事件时间",
+    "subtitle": "将事件时间从服务器时间(GMT-2)转换为您的时区",
+    "serverTimeLabel": "服务器时间 (GMT-2)",
+    "yourTimeLabel": "您的当前时间 ()",
+    "selectTimezone": "选择您的时区",
+    "allEventTimesBy": "按时区的所有事件时间",
+    "eventTimesTable": "事件时间表",
+    "canyonClash": "峡谷冲突",
+    "capitalClash": "首都冲突",
+    "avaBusterDay": "AvA 破坏者日",
+    "friday": "星期五",
+    "saturday": "星期六",
+    "tyrantTime": "暴君时间",
+    "tyrantSubtitle": "暴君或自定义事件时间(您的本地时间)",
+    "serverTime": "服务器时间",
+    "yourLocalTime": "您的本地时间"
   },
   "about": {
     "title": "关于峡谷冲突"

@@ -18,6 +18,18 @@
   "noMarkings": "Aucun marquage",
   "deletMarking": "Supprimer le marquage",
   "selectLanguage": "Langue",
+  "viewOnly": "Affichage Seul",
+  "editing": "Édition",
+  "clickToEnableEditing": "Cliquez pour activer l'édition",
+  "clickToDisableEditing": "Cliquez pour désactiver l'édition",
+  "rolsPlansTooltip": "Plans ROLS - Enregistrer, Charger et Gérer les stratégies",
+  "aboutCanyonClash": "À Propos de Canyon Clash",
+  "battleTipsTooltip": "Conseils de Combat",
+  "ourSpawnArea": "Notre Zone d'Apparition",
+  "enemySpawnArea": "Zone d'Apparition de l'Ennemi",
+  "pause": "Pause",
+  "play": "Lecture",
+  "calibrationTool": "Ouvrir l'outil d'étalonnage de la carte pour définir les positions des objectifs",
   "tips": {
     "tip1": "Guérissez les troupes par lots de 100 pour éviter de gaspiller les accélérateurs de guérison. Toutes les troupes seront guéries à la fin du match.",
     "tip2": "Attaquer les QG n'utilise pas de carburant - utilisez-le stratégiquement.",
@@ -84,6 +96,24 @@
     "delete": "Supprimer",
     "deleteTooltip": "Supprimer ce plan",
     "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce plan?"
+  },
+  "worldWatch": {
+    "title": "Horloge Mondiale - Horaires des Événements",
+    "subtitle": "Convertissez les horaires des événements de l'heure du serveur (GMT-2) à votre fuseau horaire",
+    "serverTimeLabel": "HEURE DU SERVEUR (GMT-2)",
+    "yourTimeLabel": "VOTRE HEURE ACTUELLE ()",
+    "selectTimezone": "Sélectionnez votre fuseau horaire",
+    "allEventTimesBy": "Tous les horaires des événements par fuseau horaire",
+    "eventTimesTable": "Tableau des horaires des événements",
+    "canyonClash": "Canyon Clash",
+    "capitalClash": "Capital Clash",
+    "avaBusterDay": "Jour du Destructeur AvA",
+    "friday": "Vendredi",
+    "saturday": "Samedi",
+    "tyrantTime": "Heure du Tyran",
+    "tyrantSubtitle": "Heure du Tyran ou événement personnalisé à votre heure locale",
+    "serverTime": "Heure du serveur",
+    "yourLocalTime": "Votre heure locale"
   },
   "about": {
     "title": "À propos de Canyon Clash"

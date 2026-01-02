@@ -1,0 +1,68 @@
+.ava-buster-planner {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #D4A574 0%, #c49464 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ava-buster-planner .coming-soon {
+  background: white;
+  border-radius: 16px;
+  padding: 60px 40px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  animation: slideUp 0.6s ease;
+}
+
+.ava-buster-planner .coming-soon h2 {
+  color: #FF6B6B;
+  font-size: 36px;
+  margin: 0 0 20px 0;
+}
+
+.ava-buster-planner .coming-soon p {
+  color: #666;
+  font-size: 16px;
+  margin: 12px 0;
+  line-height: 1.6;
+}
+
+.ava-buster-planner .coming-soon p:first-of-type {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin: 20px 0;
+}
+
+.ava-buster-planner .coming-soon-btn {
+  margin-top: 30px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #FF6B6B 0%, #ee5a6f 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+
+.ava-buster-planner .coming-soon-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.6);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
