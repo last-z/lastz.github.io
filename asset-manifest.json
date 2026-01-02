@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/canyon-clash-planner/static/css/main.49984b7c.css",
-    "main.js": "/canyon-clash-planner/static/js/main.3be40f2f.js",
-    "static/js/453.dd0e6cf8.chunk.js": "/canyon-clash-planner/static/js/453.dd0e6cf8.chunk.js",
-    "index.html": "/canyon-clash-planner/index.html",
-    "main.49984b7c.css.map": "/canyon-clash-planner/static/css/main.49984b7c.css.map",
-    "main.3be40f2f.js.map": "/canyon-clash-planner/static/js/main.3be40f2f.js.map",
-    "453.dd0e6cf8.chunk.js.map": "/canyon-clash-planner/static/js/453.dd0e6cf8.chunk.js.map"
+    "main.css": "/lastz/static/css/main.49984b7c.css",
+    "main.js": "/lastz/static/js/main.7aa55fc4.js",
+    "static/js/453.dd0e6cf8.chunk.js": "/lastz/static/js/453.dd0e6cf8.chunk.js",
+    "index.html": "/lastz/index.html",
+    "main.49984b7c.css.map": "/lastz/static/css/main.49984b7c.css.map",
+    "main.7aa55fc4.js.map": "/lastz/static/js/main.7aa55fc4.js.map",
+    "453.dd0e6cf8.chunk.js.map": "/lastz/static/js/453.dd0e6cf8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.49984b7c.css",
-    "static/js/main.3be40f2f.js"
+    "static/js/main.7aa55fc4.js"
   ]
 }
