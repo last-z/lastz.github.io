@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/lastz/static/css/main.49984b7c.css",
-    "main.js": "/lastz/static/js/main.7aa55fc4.js",
+    "main.css": "/lastz/static/css/main.706af317.css",
+    "main.js": "/lastz/static/js/main.62ca1559.js",
     "static/js/453.dd0e6cf8.chunk.js": "/lastz/static/js/453.dd0e6cf8.chunk.js",
+    "static/media/s390-turret-1.png": "/lastz/static/media/s390-turret-1.cca20f73b3d5d683eb9b.png",
     "index.html": "/lastz/index.html",
-    "main.49984b7c.css.map": "/lastz/static/css/main.49984b7c.css.map",
-    "main.7aa55fc4.js.map": "/lastz/static/js/main.7aa55fc4.js.map",
+    "main.706af317.css.map": "/lastz/static/css/main.706af317.css.map",
+    "main.62ca1559.js.map": "/lastz/static/js/main.62ca1559.js.map",
     "453.dd0e6cf8.chunk.js.map": "/lastz/static/js/453.dd0e6cf8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.49984b7c.css",
-    "static/js/main.7aa55fc4.js"
+    "static/css/main.706af317.css",
+    "static/js/main.62ca1559.js"
   ]
 }
